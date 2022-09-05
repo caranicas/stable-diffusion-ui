@@ -6,7 +6,7 @@ import ImageModifiers from './imageModifiers';
 
 export default function CreationPanel() {
   return (
-    <div className="CreatePanel">
+    <div className="create-panel">
       <div className="basic-create">
         <div className="prompt">
           <p>Prompt </p>
