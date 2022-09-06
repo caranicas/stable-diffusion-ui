@@ -15,9 +15,23 @@ from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse
 from pydantic import BaseModel
 
+# this is needed for development.
+from fastapi.middleware.cors import CORSMiddleware
+
+
 from sd_internal import Request, Response
 
 app = FastAPI()
+
+# we need to be able to run a local server for the UI
+# and still be able to hit our python port
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 model_loaded = False
 model_is_loading = False

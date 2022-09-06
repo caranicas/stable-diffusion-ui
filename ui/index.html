@@ -927,11 +927,11 @@ async function loadModifiers() {
 }
 
 async function init() {
-    await loadModifiers()
-    await getDiskPath()
+    // await loadModifiers()
+    // await getDiskPath()
 
-    setInterval(healthCheck, HEALTH_PING_INTERVAL * 1000)
-    healthCheck()
+    // setInterval(healthCheck, HEALTH_PING_INTERVAL * 1000)
+    // healthCheck()
 }
 
 init()
