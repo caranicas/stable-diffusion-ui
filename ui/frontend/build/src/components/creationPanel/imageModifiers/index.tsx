@@ -37,10 +37,10 @@ function ModifierGrouping({title, tags}: ModifierGroupingProps) {
   // and persist if we wanted to
   const [isExpanded, setIsExpanded] = useState(false);
 
-  console.log('grouping', title, tags)
+  // console.log('grouping', title, tags)
 
   const _toggleExpand = () => {
-    console.log('toggle expand')
+    // console.log('toggle expand')
     setIsExpanded(!isExpanded);
   };
 
@@ -56,9 +56,6 @@ function ModifierGrouping({title, tags}: ModifierGroupingProps) {
 
 export default function ImageModifers() {
   const {status, data} = useQuery(["modifications"], loadModifications);
-  // useEffect(() => {
-  //   console.log('modification data', typeof data);
-  // }, [data]);
 
   const imageModifierIsOpen = useImageCreate(
     (state) => state.uiOptions.imageModifierIsOpen
@@ -68,7 +65,7 @@ export default function ImageModifers() {
   );
 
   const handleClick = () => {
-    debugger;
+    // debugger;
     toggleImageModifiersIsOpen();
   };
 
@@ -82,7 +79,7 @@ export default function ImageModifers() {
         {/* TODO: swap this manual collapse stuff out for some UI component? */}
         <h4>Image Modifiers (art styles, tags, ect)</h4>
       </button>
-      {/* map over the data set the first index as title and the second index as the tags*/}
+
       {imageModifierIsOpen && data.map((item, index) => {
         return (
           <ModifierGrouping key={item[0]} title={item[0]} tags={item[1]}/>

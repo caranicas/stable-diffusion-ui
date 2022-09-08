@@ -4,6 +4,8 @@ import MakeButton from "./makeButton";
 import AdvancedSettings from "./advancedSettings";
 import ImageModifiers from "./imageModifiers";
 
+import ModifierTag from "./modierTag";
+
 import { useImageCreate } from "../../store/imageCreateStore";
 
 import './creationPanel.css';
@@ -11,6 +13,7 @@ import './creationPanel.css';
 export default function CreationPanel() {
   const promptText = useImageCreate((state) => state.imageOptions.prompt);
   const setPrompt = useImageCreate((state) => state.setPrompt);
+  const selectedtags = useImageCreate((state) => state.selectedTags());
 
   const handlePromptChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     console.log("handlePromptChange", event.target.value);
@@ -31,8 +34,15 @@ export default function CreationPanel() {
         </div>
 
         <MakeButton></MakeButton>
-        <div>
-          [selected tags]
+        <div className="selected-tags">
+          <p>Active Tags</p>
+          <ul>
+            {selectedtags.map((tag) => (
+              <li key={tag}>
+                <ModifierTag name={tag}></ModifierTag>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

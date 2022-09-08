@@ -40,10 +40,7 @@ export const doMakeImage = async (reqBody: imageOptions) => {
   });
 
   const data = await res.json();
+  console.log(data);
+  debugger;
   return data;
 }
-
-
-// export const makeImageFrom = () => {
-//   return doMakeImage
-// }

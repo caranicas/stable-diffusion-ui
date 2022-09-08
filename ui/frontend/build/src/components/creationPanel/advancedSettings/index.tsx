@@ -2,6 +2,7 @@ import React from "react";
 import { useImageCreate } from "../../../store/imageCreateStore";
 import "./advancedSettings.css";
 
+// todo: move this someplace more global
 const IMAGE_DIMENSIONS = [
   { value: 128, label: "128 (*)" },
   { value: 192, label: "192" },
@@ -20,9 +21,7 @@ const IMAGE_DIMENSIONS = [
   { value: 1024, label: "1024 (*)" },
 ];
 
-
 function SettingsList() {
-
 
   const setImageOptions = useImageCreate((state) => state.setImageOptions);
   const imageOptions = useImageCreate((state) => state.imageOptions);

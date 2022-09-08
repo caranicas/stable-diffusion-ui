@@ -4,6 +4,7 @@
   height: 100%;
   pointer-events: auto;
   display: grid;
+  background-color: rgb(32, 33, 36);
   grid-template-columns: 360px 1fr;
   grid-template-rows: 100px 1fr 300px;
   grid-template-areas: "header header header"
@@ -25,22 +26,19 @@
 
 .header-layout {
   grid-area: header;
-  background-color: #3c3232;
 }
 
 .create-layout {
   grid-area: create;
-  background-color: #9b2424;
 }
 
 .display-layout {
   grid-area: display;
-  background-color: #2c7d42;
 }
 
 .footer-layout {
   grid-area: footer;
-  background-color: #0e1948;
+
 }
 
 /* Copypasta from Bootstrap, makes content visually hidden but still accessible for screenreaders */

@@ -1,10 +1,6 @@
 import React from "react";
+import { useImageCreate } from "../../../store/imageCreateStore";
 
-// export default function ModifierTag({name}) {
-//   return (
-//     <p>{name}</p>
-//   );
-// };
 
 type ModifierTagProps = {
   name: string;
@@ -12,12 +8,17 @@ type ModifierTagProps = {
 
 export default function ModifierTag({name}: ModifierTagProps) {
 
+  const hasTag = useImageCreate((state) => state.hasTag(name)) ? "selected" : "";
+  const toggleTag = useImageCreate((state) => state.toggleTag);
+
+  console.log('has tag', hasTag)
+
   const _toggleTag = () => {
-    console.log('toggle tag', name);
+    toggleTag(name);
   };
 
   return (
-    <div className="modiferTag" onClick={_toggleTag}>
+    <div className={"modifierTag " + hasTag} onClick={_toggleTag}>
       <p>{name}</p>
     </div>
   );
