@@ -20,8 +20,11 @@ export const healthPing = async () => {
  * the local list of modifications
  */
 export const loadModifications = async () => {
-  const response = await fetch(`${API_URL}/modifiers.json`)
+  debugger;
+  const response = await fetch(`${API_URL}/modifiers.json`);
+    debugger;
   const data = await response.json();
+  debugger;
   return data;
 }
 
@@ -31,12 +34,21 @@ export const loadModifications = async () => {
 
 export const doMakeImage = async (reqBody: imageOptions) => {
 
+  debugger;
+  let cleanOptions = { ...reqBody };
+  if(cleanOptions.tags.length > 0) {
+    cleanOptions.prompt += ',';
+    cleanOptions.prompt += cleanOptions.tags.join(",");
+  }
+  delete cleanOptions.tags;
+  debugger;
+
   const res = await fetch(`${API_URL}/image`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(reqBody)
+    body: JSON.stringify(cleanOptions)
   });
 
   const data = await res.json();
