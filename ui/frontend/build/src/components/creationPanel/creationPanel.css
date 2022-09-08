@@ -15,5 +15,9 @@
     background-color: transparent;
     color: #fff;
     border: 0 none;
-    cursor: pointer;    
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
 }

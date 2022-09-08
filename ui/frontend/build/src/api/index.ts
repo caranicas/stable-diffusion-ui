@@ -21,12 +21,12 @@ export const healthPing = async () => {
  */
 export const loadModifications = async () => {
   const response = await fetch(`${API_URL}/modifiers.json`)
-  const data = await response.text();
+  const data = await response.json();
   return data;
 }
 
 /**
- * post a new quest for an image
+ * post a new request for an image
  */
 
 export const doMakeImage = async (reqBody: imageOptions) => {

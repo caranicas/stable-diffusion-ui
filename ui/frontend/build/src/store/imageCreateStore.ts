@@ -4,6 +4,7 @@ import { devtools } from 'zustand/middleware'
 
 export type ImageCreationUiOptions = {
   advancedSettingsIsOpen: boolean;
+  imageModifierIsOpen: boolean;
 }
 
 export type imageOptions = {
@@ -34,6 +35,7 @@ interface ImageCreateState {
 
   uiOptions: ImageCreationUiOptions;
   toggleAdvancedSettingsIsOpen: () => void;
+  toggleImageModifiersIsOpen: () => void;
 }
 
 // devtools breaks TS
@@ -64,6 +66,9 @@ export const useImageCreate = create<ImageCreateState>(devtools((set) => ({
       state.imageOptions.prompt = prompt
     }))
   },
+  
+  // good for now, should make individual setters for each option
+  // and levegage immer to make sure we don't mutate state
   setImageOptions: (imageOptions: Partial<imageOptions>) => {
     set( produce((state) => {
       state.imageOptions = {
@@ -76,11 +81,21 @@ export const useImageCreate = create<ImageCreateState>(devtools((set) => ({
   uiOptions: {
     // TODO proper persistence of all UI / user settings centrally somewhere?
     advancedSettingsIsOpen: localStorage.getItem('ui:advancedSettingsIsOpen') === 'true',
+    imageModifierIsOpen: false
+    //localStorage.getItem('ui:imageModifierIsOpen') === 'true',
   },
+
   toggleAdvancedSettingsIsOpen: () => {
     set( produce((state) => {
       state.uiOptions.advancedSettingsIsOpen = !state.uiOptions.advancedSettingsIsOpen;
       localStorage.setItem('ui:advancedSettingsIsOpen', state.uiOptions.advancedSettingsIsOpen);
+    }))
+  },
+
+  toggleImageModifiersIsOpen: () => {
+    set( produce((state) => {
+      state.uiOptions.imageModifierIsOpen = !state.uiOptions.imageModifierIsOpen;
+      localStorage.setItem('ui:imageModifierIsOpen', state.uiOptions.imageModifierIsOpen);
     }))
   },
 
