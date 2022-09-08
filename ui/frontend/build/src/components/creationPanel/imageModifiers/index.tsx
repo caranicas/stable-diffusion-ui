@@ -64,10 +64,10 @@ export default function ImageModifers() {
     (state) => state.toggleImageModifiersIsOpen
   );
 
-  useEffect(() => {
-    console.log("imageModifers", status, data);
-  }, [status, data]);
-  
+  // useEffect(() => {
+  //   console.log("imageModifers", status, data);
+  // }, [status, data]);
+
 
   const handleClick = () => {
     // debugger;
