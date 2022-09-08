@@ -1,19 +1,18 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 import MakeButton from "./makeButton";
-import AdvancedSettings from './advancedSettings';
-import ImageModifiers from './imageModifiers';
+import AdvancedSettings from "./advancedSettings";
+import ImageModifiers from "./imageModifiers";
 
 import { useImageCreate } from "../../store/imageCreateStore";
 
+import './creationPanel.css';
 
 export default function CreationPanel() {
-
-  
   const promptText = useImageCreate((state) => state.imageOptions.prompt);
   const setPrompt = useImageCreate((state) => state.setPrompt);
 
-  const handlePromptChange = (event) => {
+  const handlePromptChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     console.log("handlePromptChange", event.target.value);
     setPrompt(event.target.value);
   };
@@ -32,6 +31,9 @@ export default function CreationPanel() {
         </div>
 
         <MakeButton></MakeButton>
+        <div>
+          [selected tags]
+        </div>
       </div>
 
       <div className="advanced-create">

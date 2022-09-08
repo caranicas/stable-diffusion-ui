@@ -18,6 +18,9 @@ export const useImageQueue = create<ImageDisplayState>((set, get) => ({
   // use produce to make sure we don't mutate state
   addNewImage: (id: string, imageOptions: any) => {
     set( produce((state) => {
+      if (imageOptions.isSeedRandom) {
+        imageOptions.seed = Math.floor(Math.random() * 10000);
+      }
       state.images.push({ id, options: imageOptions });
     }));
   },

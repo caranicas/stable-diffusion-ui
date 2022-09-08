@@ -1,4 +1,4 @@
-.create-panel {
+/* .create-panel {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -6,4 +6,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+.panel-box-toggle-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
+    color: #fff;
+    border: 0 none;
+    cursor: pointer;    
 }

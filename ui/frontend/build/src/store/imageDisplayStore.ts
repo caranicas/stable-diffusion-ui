@@ -9,10 +9,8 @@ interface ImageDisplayState {
   addNewImage: (ImageData: string, imageOptions: any) => void
 }
 
-// figure out why TS is complaining about this
-// @ts-ignore
 export const useImageDisplay = create<ImageDisplayState>((set) => ({
-  images: new Map<string, any>(),
+  imageOptions: new Map<string, any>(),
   currentImage: null,
   // use produce to make sure we don't mutate state
   addNewImage: (ImageData: string, imageOptions: any) => {

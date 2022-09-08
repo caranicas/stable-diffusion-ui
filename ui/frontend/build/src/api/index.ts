@@ -31,7 +31,6 @@ export const loadModifications = async () => {
 
 export const doMakeImage = async (reqBody: imageOptions) => {
 
-  debugger;
   const res = await fetch(`${API_URL}/image`, {
     method: 'POST',
     headers: {

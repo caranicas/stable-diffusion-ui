@@ -2,6 +2,10 @@ import create from 'zustand';
 import produce from 'immer';
 import { devtools } from 'zustand/middleware'
 
+export type ImageCreationUiOptions = {
+  advancedSettingsIsOpen: boolean;
+}
+
 export type imageOptions = {
   // id: number;
   prompt: string;
@@ -16,6 +20,7 @@ export type imageOptions = {
   guidence: number;
   promptStrength: number;
   autoSave: boolean;
+  diskPath: string;
   soundOnComplete: boolean;
   useTurboMode: boolean;
   useCPU: boolean;
@@ -24,7 +29,11 @@ export type imageOptions = {
 
 interface ImageCreateState {
   imageOptions: imageOptions;
-  setPrompt: (prompt: string) => void
+  setPrompt: (prompt: string) => void;
+  setImageOptions: (imageOptions: Partial<imageOptions>) => void;
+
+  uiOptions: ImageCreationUiOptions;
+  toggleAdvancedSettingsIsOpen: () => void;
 }
 
 // devtools breaks TS
@@ -40,9 +49,10 @@ export const useImageCreate = create<ImageCreateState>(devtools((set) => ({
     width: 512,
     height: 512,
     stepCount:50,
-    guidence: 7.5,
-    promptStrength: 0.8,
+    guidence: 75,
+    promptStrength: 8,
     autoSave: false,
+    diskPath: '',
     soundOnComplete: false,
     useTurboMode: false,
     useCPU: false,
@@ -52,6 +62,25 @@ export const useImageCreate = create<ImageCreateState>(devtools((set) => ({
   setPrompt: (prompt: string) => {
     set( produce((state) => {
       state.imageOptions.prompt = prompt
+    }))
+  },
+  setImageOptions: (imageOptions: Partial<imageOptions>) => {
+    set( produce((state) => {
+      state.imageOptions = {
+        ...state.imageOptions,
+        ...imageOptions
+      }
+    }))
+  },
+
+  uiOptions: {
+    // TODO proper persistence of all UI / user settings centrally somewhere?
+    advancedSettingsIsOpen: localStorage.getItem('ui:advancedSettingsIsOpen') === 'true',
+  },
+  toggleAdvancedSettingsIsOpen: () => {
+    set( produce((state) => {
+      state.uiOptions.advancedSettingsIsOpen = !state.uiOptions.advancedSettingsIsOpen;
+      localStorage.setItem('ui:advancedSettingsIsOpen', state.uiOptions.advancedSettingsIsOpen);
     }))
   },
 
