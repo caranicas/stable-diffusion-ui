@@ -23,8 +23,25 @@ const IMAGE_DIMENSIONS = [
 
 function SettingsList() {
 
-  const setImageOptions = useImageCreate((state) => state.setImageOptions);
-  const imageOptions = useImageCreate((state) => state.imageOptions);
+  // const setImageOptions = useImageCreate((state) => state.setImageOptions);
+  
+  const requestCount = useImageCreate((state) => state.requestCount);
+  const setRequestCount = useImageCreate((state) => state.setRequestCount);
+  
+  const getValueForRequestKey = useImageCreate((state) => state.getValueForRequestKey);
+  const setRequestOption = useImageCreate((state) => state.setRequestOptions);
+
+
+
+  const toggleUseUpscaling = useImageCreate((state) => state.toggleUseUpscaling);
+  const toggleUseFaceCorrection = useImageCreate((state) => state.toggleUseFaceCorrection);
+  const toggleUseRandomSeed = useImageCreate((state) => state.toggleUseRandomSeed);
+  const isRandomSeed = useImageCreate((state) => state.isRandomSeed());
+  const toggleUseAutoSave = useImageCreate((state) => state.toggleUseAutoSave);
+  const isUseAutoSave = useImageCreate((state) => state.isUseAutoSave());
+  const toggleSoundEnabled = useImageCreate((state) => state.toggleSoundEnabled);
+  const isSoundEnabled = useImageCreate((state) => state.isSoundEnabled());
+  // const imageOptions = useImageCreate((state) => state.imageOptions);
 
   return (
     <ul id="editor-settings-entries">
@@ -33,20 +50,20 @@ function SettingsList() {
         Seed:
         <input
           size={10}
-          value={imageOptions.seed ? imageOptions.seed : ""}
+          value={getValueForRequestKey("seed")}
           onChange={(e) =>
-            setImageOptions({ seed: Number(e.target.value) })
+            setRequestOption("seed", e.target.value)
           }
-          disabled={imageOptions.isSeedRandom}
+          disabled={isRandomSeed}
           placeholder="random"
         />
       </label>
       <label>
         <input
           type="checkbox"
-          checked={imageOptions.isSeedRandom}
+          checked={isRandomSeed}
           onChange={(e) =>
-            setImageOptions({ isSeedRandom: e.target.checked })
+            toggleUseRandomSeed()
           }
         />{" "}
         Random Image
@@ -57,9 +74,9 @@ function SettingsList() {
         Number of images to make:{" "}
         <input
           type="number"
-          value={imageOptions.numberOfImages}
+          value={requestCount}
           onChange={(e) =>
-            setImageOptions({ numberOfImages: Number(e.target.value) })
+            setRequestCount(parseInt(e.target.value, 10))
           }
           size={4}
         />
@@ -68,22 +85,21 @@ function SettingsList() {
         Generate in parallel:
         <input
           type="number"
-          value={imageOptions.parallelRequests}
+          value={getValueForRequestKey("num_outputs")}
           onChange={(e) =>
-            setImageOptions({ parallelRequests: Number(e.target.value) })
+            setRequestOption("num_outputs", parseInt(e.target.value, 10))
           }
           size={4}
         />
-      </label>{" "}
-      (images at once)
+        </label>
     </li>
     <li>
       <label>
         Width:
         <select
-          value={imageOptions.width}
+          value={getValueForRequestKey("width")}
           onChange={(e) =>
-            setImageOptions({ width: Number(e.target.value) })
+            setRequestOption("width", e.target.value)
           }
         >
           {IMAGE_DIMENSIONS.map((dimension) => (
@@ -101,9 +117,9 @@ function SettingsList() {
       <label>
         Height:
         <select
-          value={imageOptions.height}
+          value={getValueForRequestKey("height")}
           onChange={(e) =>
-            setImageOptions({ height: Number(e.target.value) })
+            setRequestOption("height", e.target.value)
           }
         >
           {IMAGE_DIMENSIONS.map((dimension) => (
@@ -121,9 +137,9 @@ function SettingsList() {
       <label>
         Number of inference steps:{" "}
         <input
-          value={imageOptions.stepCount}
+          value={getValueForRequestKey("num_inference_steps")}
           onChange={(e) =>
-            setImageOptions({ stepCount: Number(e.target.value) })
+            setRequestOption("num_inference_steps", e.target.value)
           }
           size={4}
         />
@@ -133,38 +149,39 @@ function SettingsList() {
       <label>
         Guidance Scale:
         <input
-          value={imageOptions.guidence}
+          value={getValueForRequestKey("guidance_scale")}
           onChange={(e) =>
-            setImageOptions({ guidence: Number(e.target.value) })
+            setRequestOption("guidance_scale", e.target.value)
           }
           type="range"
           min="10"
           max="200"
         />
       </label>
-      <span>{imageOptions.guidence / 10}</span>
+      <span>{getValueForRequestKey("guidance_scale") / 10}</span>
     </li>
     <li className="mb-4">
       <label>
         Prompt Strength:{" "}
         <input
-          value={imageOptions.promptStrength}
+          value={getValueForRequestKey("prompt_strength")}
           onChange={(e) =>
-            setImageOptions({ promptStrength: Number(e.target.value) })
+            // setImageOptions({ promptStrength: Number(e.target.value) })
+            setRequestOption("prompt_strength", e.target.value)
           }
           type="range"
           min="0"
           max="10"
         />
       </label>
-      <span>{imageOptions.promptStrength / 10}</span>
+      <span>{getValueForRequestKey("prompt_strength") / 10}</span>
     </li>
     <li>
       <label>
         <input
-          checked={imageOptions.autoSave}
+          checked={isUseAutoSave}
           onChange={(e) =>
-            setImageOptions({ autoSave: e.target.checked })
+            toggleUseAutoSave()
           }
           type="checkbox"
         />
@@ -172,10 +189,12 @@ function SettingsList() {
       </label>
       <label>
         <input
-          value={imageOptions.diskPath}
-          onChange={(e) => setImageOptions({ diskPath: e.target.value })}
+          value={getValueForRequestKey("save_to_disk_path")}
+          onChange={(e) => 
+            setRequestOption("save_to_disk_path", e.target.value)
+          }
           size={40}
-          disabled={!imageOptions.autoSave}
+          disabled={!isUseAutoSave}
         />
         <span className="visually-hidden">
           Path on disk where images will be saved
@@ -185,9 +204,9 @@ function SettingsList() {
     <li>
       <label>
         <input
-          checked={imageOptions.soundOnComplete}
+          checked={isSoundEnabled}
           onChange={(e) =>
-            setImageOptions({ soundOnComplete: e.target.checked })
+            toggleSoundEnabled()
           }
           type="checkbox"
         />
@@ -197,9 +216,9 @@ function SettingsList() {
     <li>
       <label>
         <input
-          checked={imageOptions.useTurboMode}
+          checked={getValueForRequestKey("turbo")}
           onChange={(e) =>
-            setImageOptions({ useTurboMode: e.target.checked })
+            setRequestOption("turbo", e.target.checked)
           }
           type="checkbox"
         />
@@ -211,8 +230,10 @@ function SettingsList() {
       <label>
         <input
           type="checkbox"
-          checked={imageOptions.useCPU}
-          onChange={(e) => setImageOptions({ useCPU: e.target.checked })}
+          checked={getValueForRequestKey("use_cpu")}
+          onChange={(e) =>
+            setRequestOption("use_cpu", e.target.checked)
+          }
         />
         Use CPU instead of GPU (warning: this will be *very* slow)
       </label>
@@ -220,9 +241,9 @@ function SettingsList() {
     <li>
       <label>
         <input
-          checked={imageOptions.useFullPrecision}
+          checked={getValueForRequestKey("use_full_precision")}
           onChange={(e) =>
-            setImageOptions({ useFullPrecision: e.target.checked })
+            setRequestOption("use_full_precision", e.target.checked)
           }
           type="checkbox"
         />

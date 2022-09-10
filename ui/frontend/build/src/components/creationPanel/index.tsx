@@ -11,13 +11,13 @@ import { useImageCreate } from "../../store/imageCreateStore";
 import './creationPanel.css';
 
 export default function CreationPanel() {
-  const promptText = useImageCreate((state) => state.imageOptions.prompt);
-  const setPrompt = useImageCreate((state) => state.setPrompt);
+
+  const promptText = useImageCreate((state) => state.getValueForRequestKey("prompt"));
+  const setRequestOption = useImageCreate((state) => state.setRequestOptions);
   const selectedtags = useImageCreate((state) => state.selectedTags());
 
   const handlePromptChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log("handlePromptChange", event.target.value);
-    setPrompt(event.target.value);
+    setRequestOption("prompt", event.target.value);
   };
 
   return (

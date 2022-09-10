@@ -1,5 +1,6 @@
 import create from 'zustand';
 import produce from 'immer';
+import { useRandomSeed } from '../utils';
 
 import { imageOptions } from './imageCreateStore';
 
@@ -23,12 +24,13 @@ export const useImageQueue = create<ImageQueueState>((set, get) => ({
 
       let { seed } = imageOptions;
       if (imageOptions.isSeedRandom) {
-        seed = Math.floor(Math.random() * 10000);
+        seed = useRandomSeed();
       }
 
       state.images.push({ id, options: {...imageOptions, seed} });
     }));
   },
+  
   hasQueuedImages: () => {
     return get().images.length > 0;
   },
