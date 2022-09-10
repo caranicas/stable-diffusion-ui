@@ -66,7 +66,6 @@ class ImageRequest(BaseModel):
 class SetAppConfigRequest(BaseModel):
     update_branch: str = "main"
 
-
 # set the headers for the response
 headers = {"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"}
 
@@ -196,7 +195,7 @@ def read_modifiers():
 
 @app.get('/modifiers.json')
 def read_modifiers():
-    return FileResponse(os.path.join(SD_UI_DIR, 'modifiers.json'))
+    return FileResponse(os.path.join(SD_UI_DIR, 'frontend/dist/modifiers.json'))
 
 @app.get('/output_dir')
 def read_home_dir():
