@@ -38,6 +38,7 @@ export const doMakeImage = async (reqBody: imageOptions) => {
     cleanOptions.prompt += ',';
     cleanOptions.prompt += cleanOptions.tags.join(",");
   }
+  // @ts-ignore
   delete cleanOptions.tags;
 
   const res = await fetch(`${API_URL}/image`, {
