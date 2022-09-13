@@ -14,6 +14,7 @@ export type ImageCreationUiOptions = {
   isSoundEnabled: boolean;
 }
 
+
 export type ImageRequest = {
   prompt: string;
   seed: number;
@@ -28,7 +29,7 @@ export type ImageRequest = {
   use_full_precision: boolean;
   save_to_disk_path: null | string;
   use_face_correction: null | 'GFPGANv1.3';
-  use_upscale: null | 'RealESRGAN_x4plus' | 'RealESRGAN_x4plus_anime_6B ';
+  use_upscale: null| 'RealESRGAN_x4plus' | 'RealESRGAN_x4plus_anime_6B';
   show_only_filtered_image: boolean;
   init_image: undefined | string;
   prompt_strength: undefined | number;
@@ -52,7 +53,9 @@ interface ImageCreateState {
   toggleAdvancedSettingsIsOpen: () => void;
   toggleImageModifiersIsOpen: () => void;
   toggleUseUpscaling: () => void;
+  isUsingUpscaling: () => boolean;
   toggleUseFaceCorrection: () => void;
+  isUsingFaceCorrection: () => boolean;
   toggleUseRandomSeed: () => void;
   isRandomSeed: () => boolean; 
   toggleUseAutoSave: () => void;
@@ -75,13 +78,14 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
     guidance_scale: 7.5,
     width: 512,
     height: 512,
+    prompt_strength: 8,
     // allow_nsfw: false,
     turbo: true,
     use_cpu: false,
     use_full_precision: true,
-    save_to_disk_path: null,
+    save_to_disk_path: 'null',
     use_face_correction: null,
-    use_upscale:null,
+    use_upscale: 'RealESRGAN_x4plus',
     show_only_filtered_image: false,
   } as ImageRequest,
 
@@ -123,34 +127,42 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
   // the request body to send to the server
   // this is a computed value, just adding the tags to the request
   builtRequest: () => {
+
+    console.log('builtRequest');
     const state = get();
     const requestOptions = state.requestOptions;
     const tags = state.tags;  
 
     // join all the tags with a comma and add it to the prompt
     const prompt = `${requestOptions.prompt} ${tags.join(',')}`;
-
-    // if we arent using auto save clear the save path
-    if(!state.uiOptions.isUseAutoSave){
-      // maybe this is "None" ?
-      // TODO check this
-      requestOptions.save_to_disk_path = null;
-    }
-
-    // if we arent using face correction clear the face correction
-    if(!state.uiOptions.isCheckUseFaceCorrection){
-      requestOptions.use_face_correction = null;
-    }
-
-    // if we arent using upscaling clear the upscaling
-    if(!state.uiOptions.isCheckedUseUpscaling){
-      requestOptions.use_upscale = null;
-    }
+    console.log('builtRequest return1');
 
     const request = {
       ...requestOptions,
       prompt
     }
+    // if we arent using auto save clear the save path
+    if(!state.uiOptions.isUseAutoSave){
+      // maybe this is "None" ?
+      // TODO check this
+      request.save_to_disk_path = null;
+    }
+    console.log('builtRequest return2');
+    // if we arent using face correction clear the face correction
+    if(!state.uiOptions.isCheckUseFaceCorrection){
+      request.use_face_correction = null;
+    }
+    console.log('builtRequest return3');
+    // if we arent using upscaling clear the upscaling
+    if(!state.uiOptions.isCheckedUseUpscaling){
+      request.use_upscale = null;
+    }
+
+    // const request = {
+    //   ...requestOptions,
+    //   prompt
+    // }
+    console.log('builtRequest return last');
     return request;
   },
 
@@ -188,6 +200,10 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
     }))
   },
 
+  isUsingUpscaling: () => {
+    return get().uiOptions.isCheckedUseUpscaling;
+  },
+
   toggleUseFaceCorrection: () => {
     set( produce((state) => {
       state.uiOptions.isCheckUseFaceCorrection = !state.uiOptions.isCheckUseFaceCorrection;
@@ -195,6 +211,11 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
       localStorage.setItem('ui:isCheckUseFaceCorrection', state.uiOptions.isCheckUseFaceCorrection);
     }))
   },
+
+  isUsingFaceCorrection: () => {
+    return get().uiOptions.isCheckUseFaceCorrection;
+  },
+
 
   toggleUseRandomSeed: () => {
     set( produce((state) => {
@@ -213,7 +234,6 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
     //save_to_disk_path
     set( produce((state) => {
       state.uiOptions.isUseAutoSave = !state.uiOptions.isUseAutoSave;
-      state.requestOptions.save_to_disk_path = state.uiOptions.isUseAutoSave ? 'auto' : null;
       localStorage.setItem('ui:isUseAutoSave', state.uiOptions.isUseAutoSave);
     }))
   },

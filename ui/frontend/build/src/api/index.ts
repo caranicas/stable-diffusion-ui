@@ -2,7 +2,7 @@
  * basic server health
  */
 
-import type {imageOptions} from '../store/imageCreateStore';
+import type {ImageRequest} from '../store/imageCreateStore';
 
 // when we are on dev we want to specifiy 9000 as the port for the backend
 // when we are on prod we want be realtive to the current url
@@ -30,30 +30,38 @@ export const loadModifications = async () => {
   return data;
 }
 
+export const getSaveDirectory = async () => {
+  const response = await fetch(`${API_URL}/output_dir`);
+  const data = await response.json(); 
+  return data[0];
+};
+
 /**
  * post a new request for an image
  */
 
 export const MakeImageKey = 'MakeImage';
-export const doMakeImage = async (reqBody: imageOptions) => {
+export const doMakeImage = async (reqBody: ImageRequest) => {
 
 
-  let cleanOptions = { ...reqBody };
-  if(cleanOptions.tags.length > 0) {
-    cleanOptions.prompt += ',';
-    cleanOptions.prompt += cleanOptions.tags.join(",");
-  }
-  // @ts-ignore
-  delete cleanOptions.tags;
+  // let cleanOptions = { ...reqBody };
+  // if(cleanOptions.tags.length > 0) {
+  //   cleanOptions.prompt += ',';
+  //   cleanOptions.prompt += cleanOptions.tags.join(",");
+  // }
+  // // @ts-ignore
+  // delete cleanOptions.tags;
 
   const res = await fetch(`${API_URL}/image`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(cleanOptions)
+    body: JSON.stringify(reqBody)
   });
 
   const data = await res.json();
   return data;
 }
+
+
