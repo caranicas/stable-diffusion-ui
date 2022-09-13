@@ -78,7 +78,7 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
     guidance_scale: 7.5,
     width: 512,
     height: 512,
-    prompt_strength: 8,
+    prompt_strength: 0.8,
     // allow_nsfw: false,
     turbo: true,
     use_cpu: false,

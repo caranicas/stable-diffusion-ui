@@ -13,6 +13,7 @@ import './creationPanel.css';
 export default function CreationPanel() {
 
   const promptText = useImageCreate((state) => state.getValueForRequestKey("prompt"));
+  const init_image = useImageCreate((state) => state.getValueForRequestKey("init_image"));
   const setRequestOption = useImageCreate((state) => state.setRequestOptions);
   const selectedtags = useImageCreate((state) => state.selectedTags());
 
@@ -21,20 +22,21 @@ export default function CreationPanel() {
   };
 
   const _handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("file select", event);
+    //console.log("file select", event);
     const file = event.target.files[0];
 
-    console.log("file", file);
+    // console.log("file", file);
 
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e) => {
-    //     if (e.target) {
-    //       setRequestOption("file", e.target.result);
-    //     }
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          debugger;
+          setRequestOption("init_image", e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -51,12 +53,14 @@ export default function CreationPanel() {
         </div> */}
 
 
-        <div id="editor-inputs-init-image" class="row">
-          <label for="init_image"><b>Initial Image:</b> (optional) </label> 
+        <div id="editor-inputs-init-image" className="row">
+          <label ><b>Initial Image:</b> (optional) </label> 
             <input id="init_image" name="init_image" type="file"  onChange={_handleFileSelect}/><br/>
-          <div id="init_image_preview_container" class="image_preview_container">
-            <img id="init_image_preview" src="" width="100" height="100" />
-            <button id="init_image_clear" class="image_clear_btn">X</button>
+          <div id="init_image_preview" className="image_preview">
+            { init_image && 
+              <img id="init_image_preview" src={init_image} width="100" height="100" /> 
+            }
+            <button id="init_image_clear" className="image_clear_btn">X</button>
           </div>
         </div>
 

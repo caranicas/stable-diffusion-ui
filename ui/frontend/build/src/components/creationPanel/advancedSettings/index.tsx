@@ -218,11 +218,12 @@ function SettingsList() {
             setRequestOption("guidance_scale", e.target.value)
           }
           type="range"
-          min="10"
-          max="200"
+          min="0"
+          max="20" 
+          step=".1"
         />
       </label>
-      <span>{guidance_scale / 10}</span>
+      <span>{guidance_scale}</span>
     </li>
     {/* PROMPT STRENGTH */}
     <li className="mb-4">
@@ -236,10 +237,11 @@ function SettingsList() {
           }
           type="range"
           min="0"
-          max="10"
+          max="1"
+          step=".05"
         />
       </label>
-      <span>{prompt_strength / 10}</span>
+      <span>{prompt_strength}</span>
     </li>
     {/* AUTO SAVE */}
     <li>

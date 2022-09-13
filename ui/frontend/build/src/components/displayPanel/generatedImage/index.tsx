@@ -1,7 +1,12 @@
 import React from "react";
 
+
+import { useImageCreate } from "../../../store/imageCreateStore";
+
 export default function GeneratedImage({ imageData }: { imageData: string }) {
 
+
+  const setRequestOption = useImageCreate((state) => state.setRequestOptions);
   const _handleSave = () => {
     const link = document.createElement("a");
     link.download = "image.png";
@@ -11,6 +16,13 @@ export default function GeneratedImage({ imageData }: { imageData: string }) {
 
   const _handleUseAsInput = () => {
     console.log(" TODO : use as input");
+
+
+    setRequestOption("init_image", imageData);
+    // initImageSelector.value = null
+    // initImagePreview.src = imgBody
+
+
     // imgUseBtn.addEventListener('click', function() {
     //   initImageSelector.value = null
     //   initImagePreview.src = imgBody
