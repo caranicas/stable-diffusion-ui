@@ -39,5 +39,3 @@ export default function GeneratedImage({ imageData }: { imageData: string }) {
     </div>
   );
 }
-
-
