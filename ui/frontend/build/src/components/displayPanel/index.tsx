@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { useImageQueue } from "../../store/imageQueueStore";
 
+import { ImageRequest } from '../../store/imageCreateStore';
+
 import { useQueryClient } from '@tanstack/react-query'
 
 
@@ -23,10 +25,13 @@ export default function DisplayPanel() {
 
   useEffect(() => {
 
+    const testReq = {} as ImageRequest;
     const completedQueries = completedIds.map((id) => {
       const imageData = queryClient.getQueryData([MakeImageKey,id])
       return imageData;
     });
+
+    console.log('completedQueries', completedQueries);
 
     if (completedQueries.length > 0) {
       // map the completedImagesto a new array 

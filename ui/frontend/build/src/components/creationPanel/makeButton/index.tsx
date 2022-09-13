@@ -12,6 +12,8 @@ export default function MakeButton() {
   const addNewImage = useImageQueue((state) => state.addNewImage);
   
   const makeImage = () => {
+    // todo turn this into a loop and adjust the parallel count
+    // 
     const req =  builtRequest();
     addNewImage(uuidv4(), req)
   };
