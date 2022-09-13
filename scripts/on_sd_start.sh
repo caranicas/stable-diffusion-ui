@@ -45,6 +45,9 @@ else
     printf "\n\nDownloading packages necessary for Stable Diffusion..\n"
     printf "\n\n***** This will take some time (depending on the speed of the Internet connection) and may appear to be stuck, but please be patient ***** ..\n\n"
 
+    # prevent conda from using packages from the user's home directory, to avoid conflicts
+    export PYTHONNOUSERSITE=1
+
     if conda env create --prefix env --force -f environment.yaml ; then
         echo "Installed. Testing.."
     else
@@ -70,6 +73,8 @@ if [ `grep -c conda_sd_gfpgan_deps_installed ../scripts/install_status.txt` -gt 
 else
     printf "\n\nDownloading packages necessary for GFPGAN (Face Correction)..\n"
 
+    export PYTHONNOUSERSITE=1
+
     if pip install -e git+https://github.com/TencentARC/GFPGAN#egg=GFPGAN ; then
         echo "Installed. Testing.."
     else
@@ -92,6 +97,8 @@ if [ `grep -c conda_sd_esrgan_deps_installed ../scripts/install_status.txt` -gt 
     echo "Packages necessary for ESRGAN (Resolution Upscaling) were already installed"
 else
     printf "\n\nDownloading packages necessary for ESRGAN (Resolution Upscaling)..\n"
+
+    export PYTHONNOUSERSITE=1
 
     if pip install -e git+https://github.com/xinntao/Real-ESRGAN#egg=realesrgan ; then
         echo "Installed. Testing.."
@@ -116,6 +123,8 @@ if [ `grep -c conda_sd_ui_deps_installed ../scripts/install_status.txt` -gt "0" 
 else
     printf "\n\nDownloading packages necessary for Stable Diffusion UI..\n\n"
 
+    export PYTHONNOUSERSITE=1
+
     if conda install -c conda-forge --prefix ./env -y uvicorn fastapi ; then
         echo "Installed. Testing.."
     else
@@ -138,7 +147,7 @@ fi
 if [ -f "sd-v1-4.ckpt" ]; then
     model_size=`ls -l sd-v1-4.ckpt | awk '{print $5}'`
 
-    if [ "$model_size" -eq "4265380512" ]; then
+    if [ "$model_size" -eq "4265380512" ] || [ "$model_size" -eq "7703807346" ] || [ "$model_size" -eq "7703810927" ]; then
         echo "Data files (weights) necessary for Stable Diffusion were already downloaded"
     else
         printf "\n\nThe model file present at $PWD/sd-v1-4.ckpt is invalid. It is only $model_size bytes in size. Re-downloading.."
@@ -153,7 +162,7 @@ if [ ! -f "sd-v1-4.ckpt" ]; then
 
     if [ -f "sd-v1-4.ckpt" ]; then
         model_size=`ls -l sd-v1-4.ckpt | awk '{print $5}'`
-        if [ ! "$model_size" -eq "4265380512" ]; then
+        if [ ! "$model_size" == "4265380512" ]; then
             printf "\n\nError: The downloaded model file was invalid! Bytes downloaded: $model_size\n\n"
             printf "\n\nError downloading the data files (weights) for Stable Diffusion. Sorry about that, please try to:\n  1. Run this installer again.\n  2. If that doesn't fix it, please try the common troubleshooting steps at https://github.com/cmdr2/stable-diffusion-ui/blob/main/Troubleshooting.md\n  3. If those steps don't help, please copy *all* the error messages in this window, and ask the community at https://discord.com/invite/u9yhsFmEkB\n  4. If that doesn't solve the problem, please file an issue at https://github.com/cmdr2/stable-diffusion-ui/issues\nThanks!\n\n"
             read -p "Press any key to continue"
@@ -269,6 +278,10 @@ if [ `grep -c sd_install_complete ../scripts/install_status.txt` -gt "0" ]; then
 fi
 
 printf "\n\nStable Diffusion is ready!\n\n"
+
+SD_PATH=`pwd`
+export PYTHONPATH="$SD_PATH;$SD_PATH/env/lib/python3.8/site-packages"
+echo "PYTHONPATH=$PYTHONPATH"
 
 cd ..
 export SD_UI_PATH=`pwd`/ui
