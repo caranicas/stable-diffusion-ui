@@ -40,6 +40,7 @@ export default function DisplayPanel() {
             //@ts-ignore
             return {
               id: completedIds[index],
+              //@ts-ignore
               data: image.output[0].data,
             };
           }

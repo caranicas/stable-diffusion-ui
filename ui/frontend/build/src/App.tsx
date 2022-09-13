@@ -1,5 +1,9 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
+
+import { useQuery } from "@tanstack/react-query";
+import { getSaveDirectory } from './api'
+import { useImageCreate } from "./store/imageCreateStore";
 
 // Todo - import components here
 import HeaderDisplay from './components/headerDisplay';
@@ -9,8 +13,18 @@ import FooterDisplay from './components/footerDisplay';
 
 function App() {
   
-  console.log('App render');
+  // Get the original save directory
+  const setRequestOption = useImageCreate((state) => state.setRequestOptions);
+  const { status, data } = useQuery(
+    ['SaveDir'], getSaveDirectory,
+  );
+  useEffect(() => {
+    if(status === 'success') {
+      setRequestOption("save_to_disk_path", data);
+    }
+  }, [setRequestOption, status, data]);
 
+  
   return (
     <div className="App">
       <header className="header-layout">

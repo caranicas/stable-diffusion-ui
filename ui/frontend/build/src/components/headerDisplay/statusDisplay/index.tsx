@@ -22,6 +22,9 @@ export default function StatusDisplay({className}: {className?: string}) {
     console.log('health data', data);
   }, [data]);
 
+
+  // const data = {};
+
   useEffect(() => {
     console.log('status', status);
 
@@ -35,6 +38,7 @@ export default function StatusDisplay({className}: {className?: string}) {
     }
  
     else if (status === 'success') {
+
       if(data[0] === 'OK') {
         setStatusMessage(successMessage);
         setStatusClass('success');

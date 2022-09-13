@@ -85,6 +85,7 @@ export default function ImageModifers() {
         <h4>Image Modifiers (art styles, tags, ect)</h4>
       </button>
 
+      {/* @ts-ignore */}
       {imageModifierIsOpen && data.map((item, index) => {
         return (
           <ModifierGrouping key={item[0]} title={item[0]} tags={item[1]}/>

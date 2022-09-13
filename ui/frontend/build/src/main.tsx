@@ -12,8 +12,6 @@ import { enableMapSet } from 'immer';
 import App from './App'
 import './index.css'
 
-
-
 const queryClient = new QueryClient(
   {
     defaultOptions: {

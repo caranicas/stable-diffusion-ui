@@ -8,11 +8,13 @@ import {v4 as uuidv4} from 'uuid';
 
 export default function MakeButton() {
 
-  const imageOptions = useImageCreate((state) => state.imageOptions);
+  const builtRequest = useImageCreate((state) => state.builtRequest);
   const addNewImage = useImageQueue((state) => state.addNewImage);
   
   const makeImage = () => {
-    addNewImage(uuidv4(), imageOptions)
+    const req =  builtRequest();
+    console.log('make image', req)
+    addNewImage(uuidv4(), req)
   };
   
   return (
