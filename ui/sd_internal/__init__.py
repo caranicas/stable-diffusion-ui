@@ -40,8 +40,24 @@ class Request:
 
 class Image:
     data: str # base64
-    seed: int
-    is_nsfw: bool
+    # seed: int
+    # is_nsfw: bool
+
+    # prompt: str = ""
+    # init_image: str = None # base64
+    # mask: str = None # base64
+    # num_inference_steps: int = 50
+    # guidance_scale: float = 7.5
+    # width: int = 512
+    # height: int = 512
+    # seed: int = 42
+    # prompt_strength: float = 0.8
+    # # allow_nsfw: bool = False
+    # precision: str = "autocast" # or "full"
+    # use_full_precision: bool = False
+    # use_face_correction: str = None # or "GFPGANv1.3"
+    # use_upscale: str = None # or "RealESRGAN_x4plus" or "RealESRGAN_x4plus_anime_6B"
+
 
     def __init__(self, data, seed):
         self.data = data
@@ -55,6 +71,7 @@ class Image:
 
 class Response:
     images: list
+    inital: object
 
     def json(self):
         res = {

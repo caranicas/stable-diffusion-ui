@@ -133,6 +133,7 @@ async def image(req : ImageRequest):
 
     try:
         res: Response = runtime.mk_img(r)
+        res.req = r
 
         return res.json()
     except Exception as e:
@@ -184,7 +185,6 @@ def getAppConfig():
         print(traceback.format_exc())
         return HTTPException(status_code=500, detail=str(e))
 
-#@app.get('/media/ding.mp3')
 @app.get('/ding.mp3')
 def read_ding():
     return FileResponse(os.path.join(SD_UI_DIR, 'frontend/dist/ding.mp3'))
