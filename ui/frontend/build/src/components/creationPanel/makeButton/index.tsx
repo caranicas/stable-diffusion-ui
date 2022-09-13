@@ -13,7 +13,6 @@ export default function MakeButton() {
   
   const makeImage = () => {
     const req =  builtRequest();
-    console.log('make image', req)
     addNewImage(uuidv4(), req)
   };
   

@@ -24,8 +24,8 @@ const queryClient = new QueryClient(
     },
   }
 );
-enableMapSet();
 
+enableMapSet();
 // application entry point
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

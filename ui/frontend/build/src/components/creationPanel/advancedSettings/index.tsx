@@ -72,7 +72,6 @@ function SettingsList() {
           }
         />
         Fix incorrect faces and eyes (uses GFPGAN)
-      
       </label>
     </li>
     <li>
