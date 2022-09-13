@@ -43,15 +43,6 @@ export const getSaveDirectory = async () => {
 export const MakeImageKey = 'MakeImage';
 export const doMakeImage = async (reqBody: ImageRequest) => {
 
-
-  // let cleanOptions = { ...reqBody };
-  // if(cleanOptions.tags.length > 0) {
-  //   cleanOptions.prompt += ',';
-  //   cleanOptions.prompt += cleanOptions.tags.join(",");
-  // }
-  // // @ts-ignore
-  // delete cleanOptions.tags;
-
   const res = await fetch(`${API_URL}/image`, {
     method: 'POST',
     headers: {

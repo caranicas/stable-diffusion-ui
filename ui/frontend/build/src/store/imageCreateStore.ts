@@ -220,7 +220,7 @@ export const useImageCreate = create<ImageCreateState>(devtools((set, get) => ({
   toggleUseRandomSeed: () => {
     set( produce((state) => {
       state.uiOptions.isUseRandomSeed = !state.uiOptions.isUseRandomSeed;
-      state.requestOptions.seed = useRandomSeed();
+      state.requestOptions.seed = state.uiOptions.isUseRandomSeed ? useRandomSeed() : state.requestOptions.seed;
       localStorage.setItem('ui:isUseRandomSeed', state.uiOptions.isUseRandomSeed);
     }))
   },

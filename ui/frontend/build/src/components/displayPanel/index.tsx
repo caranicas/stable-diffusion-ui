@@ -23,30 +23,24 @@ export default function DisplayPanel() {
 
   useEffect(() => {
 
-    const completedImages = completedIds.map((id) => {
+    const completedQueries = completedIds.map((id) => {
       const imageData = queryClient.getQueryData([MakeImageKey,id])
       return imageData;
     });
 
-    if (completedImages.length > 0) {
-      debugger;
-    
+    if (completedQueries.length > 0) {
       // map the completedImagesto a new array 
       // and then set the state
-      setCompletedImages(
-        //@ts-ignore // figure out how to type this
-        completedImages.map((image, index ) => {
-          if(void 0 !== image) {
-            //@ts-ignore
-            return {
-              id: completedIds[index],
-              //@ts-ignore
-              data: image.output[0].data,
-            };
-          }
-        }).reverse()
-      );
-
+      const temp = completedQueries.map((query, index ) => {
+        // debugger;
+        if(void 0 !== query) {
+          return query.output.map((data)=>{
+            return {id: `${completedIds[index]}-${data.seed}`, data: data.data}
+          })
+        }
+        
+      }).flat().reverse();
+      setCompletedImages(temp);
     }
     else {
       setCompletedImages([]);
