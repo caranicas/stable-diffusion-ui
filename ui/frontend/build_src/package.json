@@ -1,7 +1,7 @@
 {
-  "name": "react-ts",
+  "name": "stable-diffusion-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.12",
   "type": "module",
   "scripts": {
     "pretty": "prettier --write .",
