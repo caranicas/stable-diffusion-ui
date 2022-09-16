@@ -1,18 +1,9 @@
-import {
-  Link,
-  MakeGenerics,
-  Outlet,
-  ReactLocation,
-  Router,
-  useMatch,
-} from "@tanstack/react-location";
-
+import { ReactLocation, Router } from "@tanstack/react-location";
 
 import Home from "./components/layouts/Home";
 import Settings from "./components/layouts/Settings";
 
 const location = new ReactLocation();
-
 
 function App() {
   return (
@@ -23,8 +14,7 @@ function App() {
         {path: "history", element: <History />},
         {path: "settings", element: <Settings />},
       ]}
-    >
-    </Router>
+    ></Router>
   );
 }
 
