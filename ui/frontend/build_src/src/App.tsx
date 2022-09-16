@@ -20,6 +20,7 @@ function App() {
       location={location}
       routes={[
         {path: "/", element: <Home />},
+        {path: "history", element: <History />},
         {path: "settings", element: <Settings />},
       ]}
     >
