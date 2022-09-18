@@ -1,0 +1,34 @@
+{
+  "title": "Stable Diffusion UI",
+  "description": "",
+  "status-starting": "Stable Diffusion is starting...",
+  "status-ready": "Stable Diffusion is ready to use!",
+  "status-error": "Stable Diffusion is not running!",
+  "editor-title": "Prompt",
+  "initial-image-text": "Initial Image: (optional)",
+  "initial-image-button": "Browse...",
+  "initial-image-text2": "No file selected.",
+  "make-image-button": "Make Image",
+  "make-image-button-stop": "Stop",
+  "settings": {
+    "base-image": "",
+    "seed": "",
+    "amount-of-img": "",
+    "how-many": "",
+    "width": "",
+    "height": "",
+    "guide-scale": "",
+    "live-preview": "",
+    "fix-face": "",
+    "upscale": "",
+    "corrected": ""
+  },
+  "advanced-settings": {},
+  "preview-prompt": {
+    "part1": "Type a prompt and press the \"Make Image\" button.",
+    "part2": "You can set an \"Initial Image\" if you want to guide the AI.\n",
+    "part3": "You can also add modifiers like \"Realistic\", \"Pencil Sketch\", \"ArtStation\" etc by browsing through the \"Image Modifiers\" section and selecting the desired modifiers.\n",
+    "part4": "Click \"Advanced Settings\" for additional settings like seed, image size, number of images to generate etc.",
+    "part5": "Enjoy! :)"
+  }
+}

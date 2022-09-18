@@ -8,7 +8,6 @@ import { darkTheme, lightTheme } from "./styles/theme.css";
 const location = new ReactLocation();
 
 function App() {
-
   // just check for the theme one 1 time
   // var { matches } = window.matchMedia('(prefers-color-scheme: dark)')
   const matches = true;

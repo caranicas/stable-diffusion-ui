@@ -9,7 +9,10 @@ import {
   HeaderDisplayMain, //@ts-ignore
 } from "./headerDisplay.css.ts";
 
+import { useTranslation } from "react-i18next";
+
 export default function HeaderDisplay() {
+  const { t } = useTranslation();
   // but this will be moved to the status display when it is created
   const { status, data } = useQuery(["config"], getConfig);
 
@@ -35,7 +38,7 @@ export default function HeaderDisplay() {
   return (
     <div className={HeaderDisplayMain}>
       <h1>
-        Stable Diffusion UI {version} {release}{" "}
+        {t("title")} {version} {release}{" "}
       </h1>
       <StatusDisplay className="status-display"></StatusDisplay>
     </div>
