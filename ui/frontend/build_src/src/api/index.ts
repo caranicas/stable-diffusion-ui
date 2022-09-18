@@ -2,7 +2,7 @@
  * basic server health
  */
 
-import type { ImageRequest } from "../store/imageCreateStore";
+import type { ImageRequest } from "../stores/imageCreateStore";
 
 // when we are on dev we want to specifiy 9000 as the port for the backend
 // when we are on prod we want be realtive to the current url
@@ -29,6 +29,13 @@ export const getSaveDirectory = async () => {
   const response = await fetch(`${API_URL}/output_dir`);
   const data = await response.json();
   return data[0];
+};
+
+export const getConfig = async () => {
+  const response = await fetch(`${API_URL}/app_config`);
+  console.log("getConfig response", response);
+  const data = await response.json();
+  return data;
 };
 
 /**

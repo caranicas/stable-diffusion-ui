@@ -5,10 +5,6 @@ import { devtools } from "zustand/middleware";
 import { useRandomSeed } from "../utils";
 
 export type ImageCreationUiOptions = {
-  advancedSettingsIsOpen: boolean;
-  imageModifierIsOpen: boolean;
-  isCheckedUseUpscaling: boolean;
-  isCheckUseFaceCorrection: boolean;
   isUseRandomSeed: boolean;
   isUseAutoSave: boolean;
   isSoundEnabled: boolean;
@@ -58,31 +54,37 @@ export type ImageRequest = {
   use_full_precision: boolean;
   save_to_disk_path: null | string;
   use_face_correction: null | "GFPGANv1.3";
-  use_upscale: null | "RealESRGAN_x4plus" | "RealESRGAN_x4plus_anime_6B";
+  use_upscale: null | "RealESRGAN_x4plus" | "RealESRGAN_x4plus_anime_6B" | "";
   show_only_filtered_image: boolean;
   init_image: undefined | string;
   prompt_strength: undefined | number;
 };
 
+type ModifiersList = string[];
+type ModifiersOptions = string | ModifiersList[];
+type ModifiersOptionList = ModifiersOptions[];
+
 interface ImageCreateState {
   parallelCount: number;
   requestOptions: ImageRequest;
+  allModifiers: ModifiersOptionList;
   tags: string[];
+  isInpainting: boolean;
 
   setParallelCount: (count: number) => void;
   setRequestOptions: (key: keyof ImageRequest, value: any) => void;
   getValueForRequestKey: (key: keyof ImageRequest) => any;
+  setAllModifiers: (modifiers: ModifiersOptionList) => void;
 
+  setModifierOptions: (key: string, value: any) => void;
   toggleTag: (tag: string) => void;
   hasTag: (tag: string) => boolean;
   selectedTags: () => string[];
   builtRequest: () => ImageRequest;
 
   uiOptions: ImageCreationUiOptions;
-  toggleAdvancedSettingsIsOpen: () => void;
-  toggleImageModifiersIsOpen: () => void;
   toggleUseUpscaling: () => void;
-  isUsingUpscaling: () => boolean;
+  // isUsingUpscaling: () => boolean;
   toggleUseFaceCorrection: () => void;
   isUsingFaceCorrection: () => boolean;
   toggleUseRandomSeed: () => void;
@@ -91,6 +93,7 @@ interface ImageCreateState {
   isUseAutoSave: () => boolean;
   toggleSoundEnabled: () => void;
   isSoundEnabled: () => boolean;
+  toggleInpainting: () => void;
 }
 
 // devtools breaks TS
@@ -118,7 +121,20 @@ export const useImageCreate = create<ImageCreateState>(
       show_only_filtered_image: true,
     } as ImageRequest,
 
+    // selected tags
     tags: [] as string[],
+
+    uiOptions: {
+      // TODO proper persistence of all UI / user settings centrally somewhere?
+      // localStorage.getItem('ui:advancedSettingsIsOpen') === 'true',
+      isUseRandomSeed: true,
+      isUseAutoSave: false,
+      isSoundEnabled: false,
+    },
+
+    allModifiers: [[[]]] as ModifiersOptionList,
+
+    isInpainting: false,
 
     setParallelCount: (count: number) =>
       set(
@@ -137,6 +153,14 @@ export const useImageCreate = create<ImageCreateState>(
 
     getValueForRequestKey: (key: keyof ImageRequest) => {
       return get().requestOptions[key];
+    },
+
+    setAllModifiers: (modifiers: ModifiersOptionList) => {
+      set(
+        produce((state) => {
+          state.allModifiers = modifiers;
+        })
+      );
     },
 
     toggleTag: (tag: string) => {
@@ -180,96 +204,33 @@ export const useImageCreate = create<ImageCreateState>(
         // TODO check this
         request.save_to_disk_path = null;
       }
-      // if we arent using face correction clear the face correction
-      if (!state.uiOptions.isCheckUseFaceCorrection) {
-        request.use_face_correction = null;
-      }
 
+      // a bit of a hack. figure out what a clean value to pass to the server is
       // if we arent using upscaling clear the upscaling
-      if (!state.uiOptions.isCheckedUseUpscaling) {
+      if (request.use_upscale === "") {
         request.use_upscale = null;
       }
 
       return request;
     },
 
-    uiOptions: {
-      // TODO proper persistence of all UI / user settings centrally somewhere?
-      // localStorage.getItem('ui:advancedSettingsIsOpen') === 'true',
-      advancedSettingsIsOpen: false,
-      imageModifierIsOpen: false,
-      isCheckedUseUpscaling: false,
-      isCheckUseFaceCorrection: true,
-      isUseRandomSeed: true,
-      isUseAutoSave: false,
-      isSoundEnabled: false,
-    },
-
-    toggleAdvancedSettingsIsOpen: () => {
-      set(
-        produce((state) => {
-          state.uiOptions.advancedSettingsIsOpen =
-            !state.uiOptions.advancedSettingsIsOpen;
-          localStorage.setItem(
-            "ui:advancedSettingsIsOpen",
-            state.uiOptions.advancedSettingsIsOpen
-          );
-        })
-      );
-    },
-
-    toggleImageModifiersIsOpen: () => {
-      set(
-        produce((state) => {
-          state.uiOptions.imageModifierIsOpen =
-            !state.uiOptions.imageModifierIsOpen;
-          localStorage.setItem(
-            "ui:imageModifierIsOpen",
-            state.uiOptions.imageModifierIsOpen
-          );
-        })
-      );
-    },
-
-    toggleUseUpscaling: () => {
-      set(
-        produce((state) => {
-          state.uiOptions.isCheckedUseUpscaling =
-            !state.uiOptions.isCheckedUseUpscaling;
-          state.requestOptions.use_upscale = state.uiOptions
-            .isCheckedUseUpscaling
-            ? "RealESRGAN_x4plus"
-            : undefined;
-          localStorage.setItem(
-            "ui:isCheckedUseUpscaling",
-            state.uiOptions.isCheckedUseUpscaling
-          );
-        })
-      );
-    },
-
-    isUsingUpscaling: () => {
-      return get().uiOptions.isCheckedUseUpscaling;
-    },
-
     toggleUseFaceCorrection: () => {
       set(
         produce((state) => {
-          state.uiOptions.isCheckUseFaceCorrection =
-            !state.uiOptions.isCheckUseFaceCorrection;
-          state.use_face_correction = state.uiOptions.isCheckUseFaceCorrection
-            ? "GFPGANv1.3"
-            : null;
-          // localStorage.setItem(
-          //   "ui:isCheckUseFaceCorrection",
-          //   state.uiOptions.isCheckUseFaceCorrection
-          // );
+          const isSeting =
+            typeof state.getValueForRequestKey("use_face_correction") ===
+            "string"
+              ? null
+              : "GFPGANv1.3";
+          state.requestOptions.use_face_correction = isSeting;
         })
       );
     },
 
     isUsingFaceCorrection: () => {
-      return get().uiOptions.isCheckUseFaceCorrection;
+      const isUsing =
+        typeof get().getValueForRequestKey("use_face_correction") === "string";
+      return isUsing;
     },
 
     toggleUseRandomSeed: () => {
@@ -320,6 +281,14 @@ export const useImageCreate = create<ImageCreateState>(
 
     isSoundEnabled: () => {
       return get().uiOptions.isSoundEnabled;
+    },
+
+    toggleInpainting: () => {
+      set(
+        produce((state) => {
+          state.isInpainting = !state.isInpainting;
+        })
+      );
     },
   }))
 );

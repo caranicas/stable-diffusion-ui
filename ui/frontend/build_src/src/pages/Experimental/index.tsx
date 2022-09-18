@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Settings() {
+export default function Beta() {
   return (
     <div>
-      <h1>Settings</h1>
+      <h1>Beta</h1>
     </div>
   );
 }

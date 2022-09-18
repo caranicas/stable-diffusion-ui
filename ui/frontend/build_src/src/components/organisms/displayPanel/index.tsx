@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useImageQueue } from "../../../store/imageQueueStore";
+import { useImageQueue } from "../../../stores/imageQueueStore";
 
-import { ImageRequest, useImageCreate } from "../../../store/imageCreateStore";
+import { ImageRequest, useImageCreate } from "../../../stores/imageCreateStore";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -9,18 +9,28 @@ import { doMakeImage, MakeImageKey } from "../../../api";
 
 import AudioDing from "./audioDing";
 
-import GeneratedImage from "./generatedImage";
+import GeneratedImage from "../../molecules/generatedImage";
+// import DrawImage from "../../molecules/drawImage";
 
-import "./displayPanel.css";
+import {
+  displayPanel,
+  displayContainer,
+  CurrentDisplay,
+  previousImages,
+  previousImage, //@ts-ignore
+} from "./displayPanel.css.ts";
 
 type CompletedImagesType = {
   id: string;
   data: string;
   info: ImageRequest;
 };
+
 export default function DisplayPanel() {
   const dingRef = useRef<HTMLAudioElement>(null);
   const isSoundEnabled = useImageCreate((state) => state.isSoundEnabled());
+
+  const isInPaintingMode = useImageCreate((state) => state.isInpainting);
 
   /* FETCHING  */
   // @ts-ignore
@@ -54,6 +64,10 @@ export default function DisplayPanel() {
     []
   );
   const completedIds = useImageQueue((state) => state.completedImageIds);
+
+  const init_image = useImageCreate((state) =>
+    state.getValueForRequestKey("init_image")
+  );
 
   useEffect(() => {
     const testReq = {} as ImageRequest;
@@ -89,40 +103,45 @@ export default function DisplayPanel() {
   }, [setCompletedImages, queryClient, completedIds]);
 
   return (
-    <div className="display-panel">
-      <h1>Display Panel</h1>
+    <div className={displayPanel}>
       <AudioDing ref={dingRef}></AudioDing>
-      {completedImages.length > 0 && (
-        <div id="display-container">
-          <GeneratedImage
-            key={completedImages[0].id}
-            imageData={completedImages[0].data}
-            metadata={completedImages[0].info}
-          />
+      <div className={displayContainer}>
+        {/* {isInPaintingMode && <DrawImage imageData={init_image}></DrawImage>} */}
 
-          <div id="previous-images">
-            {completedImages.map((image, index) => {
-              if (void 0 !== image) {
-                if (index == 0) {
+        {completedImages.length > 0 && (
+          <>
+            <div className={CurrentDisplay}>
+              <GeneratedImage
+                key={completedImages[0].id}
+                imageData={completedImages[0].data}
+                metadata={completedImages[0].info}
+              />
+            </div>
+
+            <div className={previousImages}>
+              {completedImages.map((image, index) => {
+                if (void 0 !== image) {
+                  if (index == 0) {
+                    return null;
+                  }
+
+                  return (
+                    <GeneratedImage
+                      className={previousImage}
+                      key={image.id}
+                      imageData={image.data}
+                      metadata={image.info}
+                    />
+                  );
+                } else {
+                  console.warn("image is undefined", image, index);
                   return null;
                 }
-
-                return (
-                  <GeneratedImage
-                    className="previous-image"
-                    key={image.id}
-                    imageData={image.data}
-                    metadata={image.info}
-                  />
-                );
-              } else {
-                console.warn("image is undefined", image, index);
-                return null;
-              }
-            })}
-          </div>
-        </div>
-      )}
+              })}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
