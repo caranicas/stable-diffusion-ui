@@ -5,6 +5,6 @@ dist
 
 # built code for the front end
 !/ui/frontend/dist
-ui/frontend/.idea/frontend.iml
-ui/frontend/.idea/modules.xml
-ui/frontend/.idea/vcs.xml
+ui/frontend/.idea/*
+ui/frontend/build_src/.idea/*
+.idea/*

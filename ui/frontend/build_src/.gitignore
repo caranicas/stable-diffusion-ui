@@ -1,4 +1,4 @@
-# local ignores - We could move these to the global ignores, 
+# local ignores - We could move these to the global ignores,
 # but I think it makes sense to keep them here
 
 # env
@@ -15,4 +15,3 @@ lerna-debug.log*
 
 # installed dependencies
 node_modules
-
