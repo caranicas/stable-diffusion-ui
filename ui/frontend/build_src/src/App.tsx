@@ -18,10 +18,12 @@ function App() {
     <Router
       location={location}
       routes={[
-        { path: "/", element: <Home className={themeClass} /> },
-        { path: "settings", element: <Settings className={themeClass} /> },
+        {path: "/", element: <Home />},
+        {path: "history", element: <History />},
+        {path: "settings", element: <Settings />},
       ]}
-    ></Router>
+    >
+    </Router>
   );
 }
 
