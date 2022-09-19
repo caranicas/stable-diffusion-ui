@@ -1,6 +1,12 @@
 {
   "title": "Stable Diffusion UI",
   "description": "",
+  "navbar": {
+    "home": "Home",
+    "history": "History",
+    "community": "Community",
+    "settings": "Settings"
+  },
   "status-starting": "Stable Diffusion is starting...",
   "status-ready": "Stable Diffusion is ready to use!",
   "status-error": "Stable Diffusion is not running!",
@@ -11,24 +17,45 @@
   "make-image-button": "Make Image",
   "make-image-button-stop": "Stop",
   "settings": {
-    "base-image": "",
-    "seed": "",
-    "amount-of-img": "",
-    "how-many": "",
-    "width": "",
-    "height": "",
-    "guide-scale": "",
-    "live-preview": "",
-    "fix-face": "",
-    "upscale": "",
-    "corrected": ""
+    "base-image": "Use base image:",
+    "seed": "Seed:",
+    "amount-of-img": "Amount of images to make:",
+    "how-many": "How many at once:",
+    "width": "Width:",
+    "height": "Height:",
+    "steps": "Number of inference steps:",
+    "guide-scale": "Guidance Scale:",
+    "live-preview": "Show a live preview of the image (disable this for faster image generation)",
+    "fix-face": "Fix incorrect faces and eyes (uses GFPGAN)",
+    "upscale": "Upscale the image to 4x resolution using:",
+    "corrected": "Show only the corrected/upscaled image"
   },
-  "advanced-settings": {},
   "preview-prompt": {
     "part1": "Type a prompt and press the \"Make Image\" button.",
     "part2": "You can set an \"Initial Image\" if you want to guide the AI.\n",
     "part3": "You can also add modifiers like \"Realistic\", \"Pencil Sketch\", \"ArtStation\" etc by browsing through the \"Image Modifiers\" section and selecting the desired modifiers.\n",
     "part4": "Click \"Advanced Settings\" for additional settings like seed, image size, number of images to generate etc.",
     "part5": "Enjoy! :)"
+  },
+  "current-task": "Current task",
+  "recent-create": "Recently Created",
+  "popup": {
+    "use-img-btn": "Use Image",
+    "use-img-btn2": "Use Image and Tags"
+  },
+  "history": {
+    "fave": "Favorites Only",
+    "search": "Search"
+  },
+  "advanced-settings": {
+    "sound": "Play sound on task completion",
+    "sound-disc": "Will play a sound so user can hear when image is done.",
+    "turbo": "Turbo mode",
+    "turbo-disc": "Generates images faster, but uses an additional 1 GB of GPU memory",
+    "cpu": "Use CPU instead of GPU",
+    "cpu-disc": "Warning: this will be *very* slow",
+    "beta": "Beta Features",
+    "beta-disc": "Get the latest features immediately (but could be less stable). \nPlease restart the program after changing this.",
+    "save": "SAVE"
   }
 }
