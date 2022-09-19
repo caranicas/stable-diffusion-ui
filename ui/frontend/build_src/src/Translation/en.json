@@ -7,6 +7,20 @@
     "community": "Community",
     "settings": "Settings"
   },
+  "land-cre": {
+    "cp": "Create Profile",
+    "cp-place": "Profile name",
+    "pp": "Profile Picture",
+    "pp-disc": "",
+    "ast": "Automatically save to",
+    "ast-disc": "File path to auto save your creations",
+    "place": "File path",
+    "cre": "Create"
+  },
+  "land-pre": {
+    "user": "Username",
+    "add": "Add Profile"
+  },
   "home": {
     "status-starting": "Stable Diffusion is starting...",
     "status-ready": "Stable Diffusion is ready to use!",
