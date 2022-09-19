@@ -80,5 +80,25 @@
     "beta": "Beta Features",
     "beta-disc": "Get the latest features immediately (but could be less stable). \nPlease restart the program after changing this.",
     "save": "SAVE"
-  }
+  },
+  "storage": {
+    "ast": "Automatically save to",
+    "ast-disc": "File path to auto save your creations",
+    "place": "File path",
+    "cps": "Cross profile sharing",
+    "cps-disc": "Profiles will see suggestions from each other.",
+    "acb": "Allow cloud backup",
+    "acb-disc": "A button will show up for images on hover",
+    "acb-place": "Choose your",
+    "acc-api": "Api key",
+    "acb-api-place": "Your API key",
+    "save": "SAVE"
+  },
+  "import": {
+    "imp-btn": "IMPORT",
+    "exp-btn": "EXPORT",
+    "disc": "It is a good idea to leave the exported file as it is. Otherwise it may not import correctly",
+    "disc:2": "When importing, only profiles that are not already present on the will be added."
+  },
+  "about": "If you found this project useful and want to help keep it alive, please to help cover the cost of development and maintenance! Thank you for your support!\n\nPlease feel free to join the discord community or file an issue if you have any problems or suggestions in using this interface.\n\nDisclaimer: The authors of this project are not responsible for any content generated using this interface.\n\nThis license of this software forbids you from sharing any content that violates any laws, produce any harm to a person, disseminate any personal information that would be meant for harm,\nspread misinformation and target vulnerable groups. For the full list of restrictions please read the license.\n\nBy using this software, you consent to the terms and conditions of the license.\n"
 }
