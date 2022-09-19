@@ -11,11 +11,15 @@
   "status-ready": "Stable Diffusion is ready to use!",
   "status-error": "Stable Diffusion is not running!",
   "editor-title": "Prompt",
-  "initial-image-text": "Initial Image: (optional)",
-  "initial-image-button": "Browse...",
-  "initial-image-text2": "No file selected.",
+  "initial-img-text": "Initial Image: (optional)",
+  "initial-img-button": "Browse...",
+  "initial-img-text2": "No file selected.",
   "make-image-button": "Make Image",
   "make-image-button-stop": "Stop",
+  "in-paint": {
+    "text": "In-Painting (select the area which the AI will paint into)",
+    "clear": "Clear"
+  },
   "settings": {
     "base-image": "Use base image:",
     "seed": "Seed:",
@@ -29,6 +33,9 @@
     "fix-face": "Fix incorrect faces and eyes (uses GFPGAN)",
     "upscale": "Upscale the image to 4x resolution using:",
     "corrected": "Show only the corrected/upscaled image"
+  },
+  "tags": {
+    "text": "Image Modifiers (art styles, tags etc)"
   },
   "preview-prompt": {
     "part1": "Type a prompt and press the \"Make Image\" button.",
