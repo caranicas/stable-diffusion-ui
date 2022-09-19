@@ -7,21 +7,23 @@
     "community": "Community",
     "settings": "Settings"
   },
-  "status-starting": "Stable Diffusion is starting...",
-  "status-ready": "Stable Diffusion is ready to use!",
-  "status-error": "Stable Diffusion is not running!",
-  "editor-title": "Prompt",
-  "initial-img-text": "Initial Image: (optional)",
-  "initial-img-button": "Browse...",
-  "initial-img-text2": "No file selected.",
-  "make-image-button": "Make Image",
-  "make-image-button-stop": "Stop",
+  "home": {
+    "status-starting": "Stable Diffusion is starting...",
+    "status-ready": "Stable Diffusion is ready to use!",
+    "status-error": "Stable Diffusion is not running!",
+    "editor-title": "Prompt",
+    "initial-img-txt": "Initial Image: (optional)",
+    "initial-img-btn": "Browse...",
+    "initial-img-text2": "No file selected.",
+    "make-img-btn": "Make Image",
+    "make-img-btn-stop": "Stop"
+  },
   "in-paint": {
-    "text": "In-Painting (select the area which the AI will paint into)",
+    "txt": "In-Painting (select the area which the AI will paint into)",
     "clear": "Clear"
   },
   "settings": {
-    "base-image": "Use base image:",
+    "base-img": "Use base image:",
     "seed": "Seed:",
     "amount-of-img": "Amount of images to make:",
     "how-many": "How many at once:",
@@ -35,7 +37,7 @@
     "corrected": "Show only the corrected/upscaled image"
   },
   "tags": {
-    "text": "Image Modifiers (art styles, tags etc)"
+    "txt": "Image Modifiers (art styles, tags etc)"
   },
   "preview-prompt": {
     "part1": "Type a prompt and press the \"Make Image\" button.",
@@ -47,8 +49,8 @@
   "current-task": "Current task",
   "recent-create": "Recently Created",
   "popup": {
-    "use-img-btn": "Use Image",
-    "use-img-btn2": "Use Image and Tags"
+    "use-btn": "Use Image",
+    "use-btn2": "Use Image and Tags"
   },
   "history": {
     "fave": "Favorites Only",
