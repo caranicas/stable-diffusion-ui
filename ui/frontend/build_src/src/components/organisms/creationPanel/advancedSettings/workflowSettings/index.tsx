@@ -16,7 +16,7 @@ import Checkbox from "../../../../atoms/headlessCheckbox";
 import NumberInput from "../../../../atoms/numberInput";
 
 import ModelOptions from "./modelOptions";
-import FileOptions from "./fileOptions";
+// import FileOptions from "./fileOptions";
 
 
 import { useTranslation } from "react-i18next";
@@ -68,9 +68,9 @@ export default function WorkflowSettings() {
             <ModelOptions></ModelOptions>
           </div>
 
-          <div className={SettingItem}>
+          {/* <div className={SettingItem}>
             <FileOptions></FileOptions>
-          </div>
+          </div> */}
 
           <div className={SettingItem}>
             <Checkbox

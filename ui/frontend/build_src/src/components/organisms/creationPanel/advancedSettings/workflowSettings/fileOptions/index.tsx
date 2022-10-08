@@ -27,7 +27,7 @@ export default function fileOptions() {
   const setRequestOption = useImageCreate((state) => state.setRequestOptions);
 
   const [fileOption, setFileOption] = useState(options[0]);
-  const fileValue = useImageCreate((state) => state.getValueForRequestKey("file_format"));
+  const fileValue = useImageCreate((state) => state.getValueForRequestKey("output_format"));
 
   const handleChange = (option: listBoxOption) => {
     setRequestOption("output_format", option.value);
@@ -38,7 +38,7 @@ export default function fileOptions() {
     if (fileValue) {
       const foundOption = options.find((option) => option.value === fileValue)
       if (foundOption != null) {
-        setFileOption(fileOption);
+        setFileOption(foundOption);
       }
     }
     else {

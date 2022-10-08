@@ -114,7 +114,7 @@ export const useImageCreate = create<ImageCreateState>(
       use_face_correction: "GFPGANv1.3",
       use_upscale: "RealESRGAN_x4plus",
       use_stable_diffusion_model: 'sd-v1-4',
-      output_format: "jpeg",
+      output_format: "png",
       show_only_filtered_image: true,
       init_image: undefined,
       sampler: "plms",
@@ -308,6 +308,7 @@ export const useImageCreate = create<ImageCreateState>(
       ) {
         request.show_only_filtered_image = false;
       }
+      debugger
       return request;
     },
 

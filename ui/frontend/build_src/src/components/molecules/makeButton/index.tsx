@@ -248,6 +248,8 @@ export default function MakeButton() {
     }
     // the request that we have built
     const req = builtRequest();
+    console.log('req', req);
+    debugger;
     queueImageRequest(req);
   };
 
