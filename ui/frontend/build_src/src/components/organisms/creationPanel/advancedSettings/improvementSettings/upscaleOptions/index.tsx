@@ -17,8 +17,10 @@ const options: listBoxOption[] = [
 
 export default function UpscaleOptions() {
   const { t } = useTranslation();
-  const [selectedUpscaleOption, setSelectedUpscaleOption] = useState(options[0])
   const setRequestOption = useImageCreate((state) => state.setRequestOptions);
+
+  // 
+  const [selectedUpscaleOption, setSelectedUpscaleOption] = useState(options[0])
   const upscaleValue = useImageCreate((state) => state.getValueForRequestKey("use_upscale"));
 
   useEffect(() => {

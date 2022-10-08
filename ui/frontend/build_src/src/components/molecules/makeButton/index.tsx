@@ -33,7 +33,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-import AudioDing from "../../molecules/audioDing";
+import AudioDing from "../_stateless/audioDing";
 
 const idDelim = "_item";
 

@@ -18,28 +18,7 @@ import {
   buttonStyle,
 } from "../../../../_recipes/button.css";
 
-
-
 import { useTranslation } from "react-i18next";
-
-// todo: move this someplace more global
-const IMAGE_DIMENSIONS = [
-  { value: 128, label: "128 (*)" },
-  { value: 192, label: "192" },
-  { value: 256, label: "256 (*)" },
-  { value: 320, label: "320" },
-  { value: 384, label: "384" },
-  { value: 448, label: "448" },
-  { value: 512, label: "512 (*)" },
-  { value: 576, label: "576" },
-  { value: 640, label: "640" },
-  { value: 704, label: "704" },
-  { value: 768, label: "768 (*)" },
-  { value: 832, label: "832" },
-  { value: 896, label: "896" },
-  { value: 960, label: "960" },
-  { value: 1024, label: "1024 (*)" },
-];
 
 export default function PropertySettings() {
   const { t } = useTranslation();
@@ -54,9 +33,6 @@ export default function PropertySettings() {
   const steps = useImageCreate((state) =>
     state.getValueForRequestKey("num_inference_steps")
   );
-  // const guidanceScale = useImageCreate((state) =>
-  //   state.getValueForRequestKey("guidance_scale")
-  // );
 
   const initImage = useImageCreate((state) =>
     state.getValueForRequestKey("init_image")
@@ -65,15 +41,6 @@ export default function PropertySettings() {
   const promptStrength = useImageCreate((state) =>
     state.getValueForRequestKey("prompt_strength")
   );
-
-  // const width = useImageCreate((state) => state.getValueForRequestKey("width"));
-  // const height = useImageCreate((state) =>
-  //   state.getValueForRequestKey("height")
-  // );
-
-  // const sampler = useImageCreate((state) =>
-  //   state.getValueForRequestKey("sampler")
-  // );
 
   const propertyOpen = useCreateUI((state) => state.isOpenAdvPropertySettings);
   const togglePropertyOpen = useCreateUI(
@@ -93,7 +60,7 @@ export default function PropertySettings() {
           <div className={SettingItem}>
 
             <Checkbox
-              label=" Random Image"
+              label="Random Image"
               isChecked={isRandomSeed}
               toggleCheck={toggleUseRandomSeed}
             ></Checkbox>

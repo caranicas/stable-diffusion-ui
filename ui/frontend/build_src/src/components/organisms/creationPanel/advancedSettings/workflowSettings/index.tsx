@@ -15,6 +15,8 @@ import {
 import Checkbox from "../../../../atoms/headlessCheckbox";
 import NumberInput from "../../../../atoms/numberInput";
 
+import ModelOptions from "./modelOptions";
+
 
 import { useTranslation } from "react-i18next";
 
@@ -59,6 +61,10 @@ export default function WorkflowSettings() {
               value={parallelCount}
               onChange={(value) => setParallelCount(value)}
             ></NumberInput>
+          </div>
+
+          <div className={SettingItem}>
+            <ModelOptions></ModelOptions>
           </div>
 
           <div className={SettingItem}>
