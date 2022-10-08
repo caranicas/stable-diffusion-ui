@@ -19,7 +19,6 @@ export default function UpscaleOptions() {
   const { t } = useTranslation();
   const setRequestOption = useImageCreate((state) => state.setRequestOptions);
 
-  // 
   const [selectedUpscaleOption, setSelectedUpscaleOption] = useState(options[0])
   const upscaleValue = useImageCreate((state) => state.getValueForRequestKey("use_upscale"));
 
