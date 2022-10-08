@@ -12,7 +12,7 @@ import {
 } from "../../../../_recipes/button.css";
 
 
-import Checkbox from "../../../../atoms/checkbox";
+import Checkbox from "../../../../atoms/headlessCheckbox";
 import NumberInput from "../../../../atoms/numberInput";
 
 

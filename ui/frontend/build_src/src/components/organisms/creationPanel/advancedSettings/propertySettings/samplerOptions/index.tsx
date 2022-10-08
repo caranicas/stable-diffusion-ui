@@ -17,7 +17,7 @@ import {
   ListboxHeadlessLabel,
   ListboxHeadlessOptions,
   ListboxHeadlessOptionItem,
-} from "../../../../../_recipes/listbox_headless.css";
+} from "../../../../../atoms/headlessListbox/listbox_headless.css";
 
 interface SamplerOptionsProps {
   id: string,

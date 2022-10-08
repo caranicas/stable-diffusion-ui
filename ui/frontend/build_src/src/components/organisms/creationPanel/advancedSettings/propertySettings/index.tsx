@@ -2,7 +2,7 @@ import React from "react";
 import { useImageCreate } from "../../../../../stores/imageCreateStore";
 import { useCreateUI } from "../../creationPanelUIStore";
 
-import Checkbox from "../../../../atoms/checkbox";
+import Checkbox from "../../../../atoms/headlessCheckbox";
 import NumberInput from "../../../../atoms/numberInput";
 
 

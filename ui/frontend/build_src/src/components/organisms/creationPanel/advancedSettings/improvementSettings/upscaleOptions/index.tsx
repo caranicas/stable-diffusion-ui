@@ -1,23 +1,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import React, { Fragment, useEffect, useState } from "react";
-import { Listbox } from '@headlessui/react'
+import React, { useEffect, useState } from "react";
+// import { Listbox } from '@headlessui/react'
 import { useTranslation } from "react-i18next";
-import { useImageCreate, SAMPLER_OPTIONS } from "../../../../../../stores/imageCreateStore";
+import { useImageCreate } from "../../../../../../stores/imageCreateStore";
 
-import { useCreateUI } from "../../../creationPanelUIStore";
+import HeadlessListbox from "../../../../../atoms/headlessListbox";
+
 
 import {
   IconFont,
 } from "../../../../../../styles/shared.css";
 
-import {
-  ListboxHeadless,
-  ListboxHeadlessButton,
-  ListBoxIcon,
-  ListboxHeadlessLabel,
-  ListboxHeadlessOptions,
-  ListboxHeadlessOptionItem,
-} from "../../../../../_recipes/listbox_headless.css";
 
 interface UpscaleOptionsProps {
   id: number,
@@ -55,39 +48,47 @@ export default function UpscaleOptions() {
   };
 
 
-
+  const FAIcon = [IconFont, 'fa-solid', 'fa-chevron-down'].join(" ");
 
   return (
-    <div className={ListboxHeadless}>
-      <Listbox value={selectedUpscaleOption} onChange={handleChange}>
-        <Listbox.Label className={ListboxHeadlessLabel}>{t("settings.ups")}</Listbox.Label>
-        <Listbox.Button
-          className={ListboxHeadlessButton}>
-          {selectedUpscaleOption.display}
-          <i className={[ListBoxIcon, IconFont, 'fa-solid', 'fa-chevron-down'].join(" ")}></i>
-        </Listbox.Button>
-        <Listbox.Options className={ListboxHeadlessOptions}>
-          {options.map((option) => (
-            <Listbox.Option
-              key={option.id}
-              value={option}
-              disabled={option.unavailable}
-              as={Fragment}
-            >
-              {({ active, selected }) => {
 
-                return (
-                  <li
-                    className={ListboxHeadlessOptionItem}
-                  >
-                    {option.display}
-                  </li>
-                )
-              }}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Listbox>
-    </div>
+    <HeadlessListbox
+      options={options}
+      currentOption={selectedUpscaleOption}
+      handleChange={handleChange}
+      label={t("settings.ups")}
+      FAIcon={FAIcon}
+    ></HeadlessListbox>
+    // <div className={ListboxHeadless}>
+    //   <Listbox value={selectedUpscaleOption} onChange={handleChange}>
+    //     <Listbox.Label className={ListboxHeadlessLabel}>{t("settings.ups")}</Listbox.Label>
+    //     <Listbox.Button
+    //       className={ListboxHeadlessButton}>
+    //       {selectedUpscaleOption.display}
+    //       <i className={[ListBoxIcon, IconFont, 'fa-solid', 'fa-chevron-down'].join(" ")}></i>
+    //     </Listbox.Button>
+    //     <Listbox.Options className={ListboxHeadlessOptions}>
+    //       {options.map((option) => (
+    //         <Listbox.Option
+    //           key={option.id}
+    //           value={option}
+    //           disabled={option.unavailable}
+    //           as={Fragment}
+    //         >
+    //           {({ active, selected }) => {
+
+    //             return (
+    //               <li
+    //                 className={ListboxHeadlessOptionItem}
+    //               >
+    //                 {option.display}
+    //               </li>
+    //             )
+    //           }}
+    //         </Listbox.Option>
+    //       ))}
+    //     </Listbox.Options>
+    //   </Listbox>
+    // </div>
   );
 }
