@@ -16,7 +16,8 @@ const samplerList: listBoxOption[] = SAMPLER_OPTIONS.map((sample, index) => {
     display: sample,
     unavailable: false,
   };
-});
+})
+
 
 export default function SamplerOptions() {
 
@@ -30,6 +31,8 @@ export default function SamplerOptions() {
 
 
   useEffect(() => {
+
+    console.log('SAMPLER USEEFFECT', sampler);
     if (sampler) {
       const sampleoption = samplerList.find((option) => option.value === sampler)
       if (sampleoption) {
@@ -48,8 +51,44 @@ export default function SamplerOptions() {
 
   const FAIcon = [IconFont, 'fa-solid', 'fa-chevron-down'].join(" ");
 
-  return (
 
+  return (
+    // <div className={ListboxHeadless}>
+    //   <Listbox value={selectedSampleOption} onChange={handleChange}>
+    //     <Listbox.Label className={ListboxHeadlessLabel}>{t("settings.sampler")}</Listbox.Label>
+    //     <div style={{ display: 'inline-block', }}>
+    //       <Listbox.Button
+    //         className={ListboxHeadlessButton}>
+    //         {selectedSampleOption.value}
+    //         <i className={[ListBoxIcon, IconFont, 'fa-solid', 'fa-chevron-down'].join(" ")}></i>
+    //       </Listbox.Button>
+    //       <Listbox.Options className={ListboxHeadlessOptions}>
+    //         {samplerList.map((sample) => (
+    //           <Listbox.Option
+    //             // className={ListboxHeadlessOption}
+    //             key={sample.id}
+    //             value={sample.value}
+    //             disabled={sample.unavailable}
+    //             as={Fragment}
+    //           >
+    //             {({ active, selected }) => {
+    //               // console.log('active', active);
+    //               // console.log('selected', selected);
+    //               return (
+    //                 <li
+    //                   className={ListboxHeadlessOptionItem}
+    //                 // data-selected={selected}
+    //                 >
+    //                   {sample.value}
+    //                 </li>
+    //               )
+    //             }}
+    //           </Listbox.Option>
+    //         ))}
+    //       </Listbox.Options>
+    //     </div>
+    //   </Listbox>
+    // </div>
     <HeadlessListbox
       options={samplerList}
       label={t("settings.sampler")}

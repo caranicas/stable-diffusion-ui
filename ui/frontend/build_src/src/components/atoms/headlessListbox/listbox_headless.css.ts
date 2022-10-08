@@ -3,9 +3,7 @@ import { calc } from '@vanilla-extract/css-utils';
 import { vars } from '../../../styles/theme/index.css';
 
 export const ListboxHeadless = style({
-  // display: 'flex',
   position: 'relative',
-
 });
 
 export const ListboxHeadlessLabel = style({
@@ -26,7 +24,6 @@ export const ListboxHeadlessOptions = style({
   backgroundColor: vars.backgroundLight,
   zIndex: 1,
   bottom: calc(vars.spacing.small).negate().toString(),
-  // bottom: `vars.spacing.small`,
   transform: `translateY(100%)`,
   borderRadius: vars.trim.smallBorderRadius,
   padding: `${vars.spacing.small} 0`,

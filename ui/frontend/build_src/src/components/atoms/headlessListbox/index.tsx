@@ -13,7 +13,7 @@ import {
 
 export interface listBoxOption {
   id: number,
-  value: string | null,
+  value: string | number | null,
   display: string,
   unavailable: boolean,
 }

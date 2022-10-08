@@ -8,6 +8,7 @@ import NumberInput from "../../../../atoms/numberInput";
 
 import SamplerOptions from "./samplerOptions";
 import GuidanceScale from "./guidanceScale";
+import SizeSelection from "./sizeSelection";
 
 import {
   SettingItem,
@@ -65,14 +66,14 @@ export default function PropertySettings() {
     state.getValueForRequestKey("prompt_strength")
   );
 
-  const width = useImageCreate((state) => state.getValueForRequestKey("width"));
-  const height = useImageCreate((state) =>
-    state.getValueForRequestKey("height")
-  );
+  // const width = useImageCreate((state) => state.getValueForRequestKey("width"));
+  // const height = useImageCreate((state) =>
+  //   state.getValueForRequestKey("height")
+  // );
 
-  const sampler = useImageCreate((state) =>
-    state.getValueForRequestKey("sampler")
-  );
+  // const sampler = useImageCreate((state) =>
+  //   state.getValueForRequestKey("sampler")
+  // );
 
   const propertyOpen = useCreateUI((state) => state.isOpenAdvPropertySettings);
   const togglePropertyOpen = useCreateUI(
@@ -117,21 +118,6 @@ export default function PropertySettings() {
           </div>
 
           <div className={SettingItem}>
-            {/* <label>
-              {t("settings.guide-scale")}
-              <input
-                value={guidanceScale}
-                onChange={(e) =>
-                  setRequestOption("guidance_scale", e.target.value)
-                }
-                type="range"
-                min="0"
-                max="20"
-                step=".1"
-              />
-            </label> */}
-            {/* <span>{guidanceScale}</span> */}
-
             <GuidanceScale></GuidanceScale>
           </div>
 
@@ -155,56 +141,10 @@ export default function PropertySettings() {
           )}
 
           <div className={SettingItem}>
-            <label>
-              {t("settings.width")}
-              <select
-                value={width}
-                onChange={(e) => setRequestOption("width", e.target.value)}
-              >
-                {IMAGE_DIMENSIONS.map((dimension) => (
-                  <option
-                    key={`width-option_${dimension.value}`}
-                    value={dimension.value}
-                  >
-                    {dimension.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label>
-              {t("settings.height")}
-              <select
-                value={height}
-                onChange={(e) => setRequestOption("height", e.target.value)}
-              >
-                {IMAGE_DIMENSIONS.map((dimension) => (
-                  <option
-                    key={`height-option_${dimension.value}`}
-                    value={dimension.value}
-                  >
-                    {dimension.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <SizeSelection></SizeSelection>
           </div>
 
           <div className={SettingItem}>
-            {/* <label>
-              {t("settings.sampler")}
-              <select
-                value={sampler}
-                onChange={(e) => setRequestOption("sampler", e.target.value)}
-              >
-                {SAMPLER_OPTIONS.map((sampler) => (
-                  <option key={`sampler-option_${sampler}`} value={sampler}>
-                    {sampler}
-                  </option>
-                ))}
-              </select>
-            </label> */}
-
             <SamplerOptions></SamplerOptions>
           </div>
         </>
