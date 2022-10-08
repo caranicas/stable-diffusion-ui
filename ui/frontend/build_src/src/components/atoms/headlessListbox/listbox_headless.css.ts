@@ -50,9 +50,6 @@ export const ListboxHeadlessOptionItem = style({
 });
 
 export const ListBoxIcon = style({
-  // position: 'absolute',
-  // right: vars.spacing.small,
-  // top: vars.spacing.small,
   marginLeft: vars.spacing.small,
 });
 

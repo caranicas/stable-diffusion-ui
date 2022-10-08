@@ -11,7 +11,7 @@ import {
 } from "./listbox_headless.css";
 
 
-interface listBoxOption {
+export interface listBoxOption {
   id: number,
   value: string | null,
   display: string,
@@ -40,36 +40,37 @@ export default function HeadlessListbox(props: ListBoxProps) {
     <div className={ListboxHeadless}>
       <Listbox value={currentOption} onChange={handleChange}>
         <Listbox.Label className={ListboxHeadlessLabel}>{label}</Listbox.Label>
+        <div style={{ display: 'inline-block' }}>
+          <Listbox.Button
+            className={ListboxHeadlessButton}>
+            {currentOption.display}
+            <i className={[ListBoxIcon, FAIcon].join(" ")}></i>
+          </Listbox.Button>
 
-        <Listbox.Button
-          className={ListboxHeadlessButton}>
-          {currentOption.display}
-          <i className={[ListBoxIcon, FAIcon].join(" ")}></i>
-        </Listbox.Button>
+          <Listbox.Options className={ListboxHeadlessOptions}>
 
-        <Listbox.Options className={ListboxHeadlessOptions}>
+            {options.map((option) => (
+              <Listbox.Option
+                key={option.id}
+                value={option}
+                disabled={option.unavailable}
+                as={Fragment}
+              >
+                {({ active, selected }) => {
 
-          {options.map((option) => (
-            <Listbox.Option
-              key={option.id}
-              value={option}
-              disabled={option.unavailable}
-              as={Fragment}
-            >
-              {({ active, selected }) => {
-
-                return (
-                  <li
-                    className={ListboxHeadlessOptionItem}
-                  >
-                    {option.display}
-                  </li>
-                )
-              }}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Listbox>
-    </div>
+                  return (
+                    <li
+                      className={ListboxHeadlessOptionItem}
+                    >
+                      {option.display}
+                    </li>
+                  )
+                }}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </div>
+      </Listbox >
+    </div >
   );
 };
