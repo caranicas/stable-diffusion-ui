@@ -48,13 +48,21 @@ export interface promptTag {
   type: 'positive' | 'negative';
 }
 
+// interface creationObject {
+//   req: ImageRequest;
+//   createTags: [];
+// }
+
+
 interface ImageCreateState {
   parallelCount: number;
-  requestOptions: ImageRequest;
-  allModifiers: ModifiersOptionList;
 
+  // creations: creationObject[];
+
+  requestOptions: ImageRequest;
   createTags: promptTag[];
 
+  allModifiers: ModifiersOptionList;
   tagMap: Record<string, string[]>;
   isInpainting: boolean;
 
@@ -293,12 +301,6 @@ export const useImageCreate = create<ImageCreateState>(
         request.prompt_strength = undefined;
       }
 
-      //     typeof state.getValueForRequestKey("use_face_correction") ===
-      //     "string"
-      //     ? null
-      //     : "GFPGANv1.3";
-      // state.requestOptions.use_face_correction = isSeting;
-
       // make sure you look above for the "null" value
       // this patches over a a backend issue if you dont ask for a filtered image
       // you get nothing back
@@ -308,7 +310,6 @@ export const useImageCreate = create<ImageCreateState>(
       ) {
         request.show_only_filtered_image = false;
       }
-      debugger
       return request;
     },
 

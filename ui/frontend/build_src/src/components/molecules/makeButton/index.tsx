@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 
 import { useImageCreate } from "../../../stores/imageCreateStore";
+
 import {
   QueueStatus,
   useRequestQueue
@@ -64,19 +65,19 @@ export default function MakeButton() {
   const setStartTime = useImageFetching((state) => state.setStartTime);
   const setNowTime = useImageFetching((state) => state.setNowTime);
   const resetForFetching = useImageFetching((state) => state.resetForFetching);
-  const appendData = useImageFetching((state) => state.appendData);
 
   // progress images logic
   const addProgressImage = useProgressImages((state) => state.addProgressImage);
 
-  // display logic
-  // const updateDisplay = useImageDisplay((state) => state.updateDisplay);
-  // new display logic
-  // const makeSpace = useCreatedMedia((state) => state.makeSpace);
+  // created logic
   const removeFailedMedia = useCreatedMedia((state) => state.removeFailedMedia);
   const addCreatedMedia = useCreatedMedia((state) => state.addCreatedMedia);
-  // const addCreatedMediaRecord = useCreatedMedia((state) => state.addCreatedMediaRecord);
-  // waiting for the python server to start sending down an image url and not a base64 string
+
+  // display logic
+  const shouldDisplayWhenComplete = useImageDisplay((state) => state.shouldDisplayWhenComplete);
+  const setCurrentImage = useImageDisplay((state) => state.setCurrentImage);
+
+
   const hackJson = (jsonStr: string, batchId: string) => {
 
     try {
@@ -96,6 +97,21 @@ export default function MakeButton() {
           const itemId = `${batchId}${idDelim}-${seed}-${index}`;
           // updateDisplay(batchId, data, seedReq);
           addCreatedMedia(batchId, seed, seedReq, { id: itemId, data });
+
+
+          if (shouldDisplayWhenComplete) {
+            setCurrentImage({ batchId, imageId: itemId, seed });
+          }
+
+          // const setCurrentImage = useImageDisplay((state) => state.setCurrentImage);
+          // const setProgressAsCurrent = (progressId: string) => {
+          //   console.log('setProgressAsCurrent - batchId', batchId);
+          //   console.log('progressId', progressId);
+          //   if (batchId != null && seed != null) {
+          //     setCurrentImage({ batchId, progressId, seed });
+          //   }
+          // }
+
         });
       }
 
@@ -248,8 +264,6 @@ export default function MakeButton() {
     }
     // the request that we have built
     const req = builtRequest();
-    console.log('req', req);
-    debugger;
     queueImageRequest(req);
   };
 

@@ -31,7 +31,6 @@ interface RequestQueueState {
   removeCompleted: () => void;
   removeErrored: () => void;
   clearQueue: () => void;
-
 }
 
 export const useRequestQueue = create<RequestQueueState>((set, get) => ({
