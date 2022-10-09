@@ -8,7 +8,8 @@ import {
 
 import Checkbox from "../../../atoms/headlessCheckbox";
 
-import MakeButton from "../../../molecules/makeButton";
+import MakeButton from "./makeButton";
+import RequestCount from "./requestCount";
 import PromptCreator from "./promptCreator";
 import SeedImage from "./seedImage";
 
@@ -21,6 +22,7 @@ export default function BasicCreation() {
   return (
     <div className={CreationBasicMain}>
       <MakeButton></MakeButton>
+      <RequestCount></RequestCount>
       <PromptCreator></PromptCreator>
       <SeedImage></SeedImage>
 

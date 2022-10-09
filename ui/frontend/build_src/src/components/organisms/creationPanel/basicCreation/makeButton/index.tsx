@@ -1,40 +1,40 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useEffect, useRef } from "react";
 
-import { useImageCreate } from "../../../stores/imageCreateStore";
+import { useImageCreate } from "../../../../../stores/imageCreateStore";
 
 import {
   QueueStatus,
   useRequestQueue
-} from "../../../stores/requestQueueStore";
+} from "../../../../../stores/requestQueueStore";
 import {
   FetchingStates,
   useImageFetching
-} from "../../../stores/imageFetchingStore";
-import { useProgressImages } from "../../../stores/progressImagesStore";
-import { useCreatedMedia } from "../../../stores/createdMediaStore";
-import { useImageDisplay } from "../../../stores/imageDisplayStore";
+} from "../../../../../stores/imageFetchingStore";
+import { useProgressImages } from "../../../../../stores/progressImagesStore";
+import { useCreatedMedia } from "../../../../../stores/createdMediaStore";
+import { useImageDisplay } from "../../../../../stores/imageDisplayStore";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { useRandomSeed } from "../../../utils";
+import { useRandomSeed } from "../../../../../utils";
 import {
   ImageRequest,
   ImageReturnType,
   ImageOutput,
-} from "../../../api/api.d";
+} from "../../../../../api/api";
 
 import {
   doMakeImage,
-} from "../../../api";
+} from "../../../../../api";
 
 import {
   buttonStyle
-} from "../../_recipes/button.css";
+} from "../../../../_recipes/button.css";
 
 import { useTranslation } from "react-i18next";
 
-import AudioDing from "../_stateless/audioDing";
+import AudioDing from "../../../../molecules/_stateless/audioDing";
 
 const idDelim = "_item";
 
