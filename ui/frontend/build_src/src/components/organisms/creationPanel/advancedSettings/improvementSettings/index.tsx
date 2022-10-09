@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useImageCreate } from "../../../../../stores/imageCreateStore";
-
 import { useCreateUI } from "../../creationPanelUIStore";
+
+import { Disclosure } from '@headlessui/react'
+import Checkbox from "../../../../atoms/headlessCheckbox";
+import UpscaleOptions from "./upscaleOptions";
 
 import {
   SettingItem,
 } from "../../../../../styles/shared.css";
-
 import {
   buttonStyle,
 } from "../../../../_recipes/button.css";
-
-import Checkbox from "../../../../atoms/headlessCheckbox";
-
-import UpscaleOptions from "./upscaleOptions";
 
 
 export default function ImprovementSettings() {
@@ -30,7 +28,7 @@ export default function ImprovementSettings() {
 
   // UI STATE
   const improvementOpen = useCreateUI((state) => state.isOpenAdvImprovementSettings);
-  const toggleImprovementOpen = useCreateUI((state) => state.toggleAdvImprovementSettings);
+  const setAdvImprovementIsOpen = useCreateUI((state) => state.setAdvImprovementIsOpen);
 
   // local state
   const [isFilteringDisabled, setIsFilteringDisabled] = useState(false);
@@ -44,43 +42,50 @@ export default function ImprovementSettings() {
     }
   }, [isUsingFaceCorrection, isUsingUpscaling, setIsFilteringDisabled]);
 
-  return (
-    <div>
-      <button
-        type="button"
-        className={buttonStyle({
-          type: 'action',
-          color: 'accent',
-        })}
-        onClick={toggleImprovementOpen}
-      >
-        Improvement Settings
-      </button>
-      {improvementOpen && (
-        <>
-          <div className={SettingItem}>
-            <Checkbox
-              label="Face Fixes (uses GFPGAN)"
-              isChecked={isUsingFaceCorrection}
-              toggleCheck={toggleUseFaceCorrection}
-            ></Checkbox>
-          </div>
-          <div className={SettingItem}>
-            <UpscaleOptions></UpscaleOptions>
-          </div>
-          <div className={SettingItem}>
-            <Checkbox
-              disabled={isFilteringDisabled}
-              label={t("settings.corrected")}
-              isChecked={filteredOnly}
-              toggleCheck={(value) => {
-                setRequestOption("show_only_filtered_image", value)
-              }}
-            ></Checkbox>
 
-          </div>
-        </>
-      )}
-    </div>
+  useEffect(() => {
+    console.log(' USE EFFECT improvementOpen', improvementOpen);
+  }, [improvementOpen]);
+
+  return (
+    <Disclosure defaultOpen={improvementOpen}>
+      {({ open }) => {
+        setAdvImprovementIsOpen(open);
+        return (
+          <>
+            <Disclosure.Button className={buttonStyle({
+              type: 'action',
+              color: 'accent',
+            })}
+            >
+              Improvement Settings
+            </Disclosure.Button>
+            <Disclosure.Panel>
+              <div className={SettingItem}>
+                <Checkbox
+                  label="Face Fixes (uses GFPGAN)"
+                  isChecked={isUsingFaceCorrection}
+                  toggleCheck={toggleUseFaceCorrection}
+                ></Checkbox>
+              </div>
+              <div className={SettingItem}>
+                <UpscaleOptions></UpscaleOptions>
+              </div>
+              <div className={SettingItem}>
+                <Checkbox
+                  disabled={isFilteringDisabled}
+                  label={t("settings.corrected")}
+                  isChecked={filteredOnly}
+                  toggleCheck={(value) => {
+                    setRequestOption("show_only_filtered_image", value)
+                  }}
+                ></Checkbox>
+              </div>
+            </Disclosure.Panel>
+          </>
+        )
+      }
+      }
+    </Disclosure >
   );
 }

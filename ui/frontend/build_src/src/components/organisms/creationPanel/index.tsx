@@ -1,6 +1,7 @@
 import React from "react";
 
 import BasicCreation from "./basicCreation";
+import PromptMatrix from "./promptMatrix";
 import AdvancedSettings from "./advancedSettings";
 import ImageModifiers from "./imageModifiers";
 import InpaintingPanel from "./inpaintingPanel";
@@ -15,6 +16,7 @@ import {
   InpaintingSlider,
 } from "./creationPanel.css";
 
+
 export default function CreationPanel() {
   const isInPaintingMode = useImageCreate((state) => state.isInpainting);
 
@@ -23,6 +25,7 @@ export default function CreationPanel() {
     <>
       <div className={CreationPaneMain}>
         <BasicCreation></BasicCreation>
+        <PromptMatrix></PromptMatrix>
         <AdvancedSettings></AdvancedSettings>
         <ImageModifiers></ImageModifiers>
       </div>

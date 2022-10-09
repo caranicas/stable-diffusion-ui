@@ -6,7 +6,12 @@ import {
   RequestCountMain
 } from "./requestCount.css";
 
-export default function RequestCount() {
+interface Props {
+  className?: string;
+}
+
+
+export default function RequestCount({ className }: Props) {
 
   const [totalRequests, setTotalRequests] = useState(1);
   const [imageText, setImageText] = useState("image");
@@ -20,7 +25,6 @@ export default function RequestCount() {
   useEffect(() => {
     const total = Math.ceil(outputs / parallelCount);
     setTotalRequests(total);
-
 
     if (outputs === 1) {
       setImageText("image");
@@ -37,7 +41,7 @@ export default function RequestCount() {
   }, [setTotalRequests, parallelCount, outputs]);
 
   return (
-    <div className={RequestCountMain}>
+    <div className={[className, RequestCountMain].join(" ")}>
       <p>Making {outputs} {imageText} in {totalRequests} {requestText}</p>
     </div>
   );

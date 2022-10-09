@@ -36,9 +36,33 @@ const app = createGlobalTheme(":root", {
 
   // 60 degree color difference
   // step downs
-  brandHue: '265', // purple
-  secondaryHue: '225', // deep blue
-  tertiaryHue: '145', // grass green
+  brandHue: '210', // sky blue
+  secondaryHue: '145', // grass green
+  tertiaryHue: '50', // burnt yellow
+
+  saturationBase: '60%',
+  saturationStep: '10%',
+  saturationDimStep: '1',
+  saturationDimmerStep: '3',
+  saturationDimmestStep: '5',
+
+  backgroundSaturation: '6%',
+  backgroundLightness: '13%',
+
+  backgroundLightSaturation: '4%',
+  backgroundLightLightness: '18%',
+
+  backgroundDarkSaturation: '3%',
+  backgroundDarkLightness: '7%',
+
+  lightnessBase: '45%',
+  lightnessStep: '5%',
+  lightnessDimStep: '1',
+  lightnessBrightStep: '3',
+
+  // backgroundMain: 'hsl(225, 6%, 13%)',
+  // backgroundLight: 'hsl(225, 4%, 18%)',
+  // backgroundDark: 'hsl(225, 3%, 7%)',
 
   // step ups
   errorHue: '0',

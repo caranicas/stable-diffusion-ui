@@ -10,25 +10,12 @@ export const AppLayout = style({
   display: "grid",
   backgroundColor: vars.backgroundMain,
   gridTemplateColumns: "400px 1fr",
-  gridTemplateRows: "70px 1fr 115px",
+  gridTemplateRows: "45px 1fr 115px",
   gridTemplateAreas: `
-    "header header header"
+    "create header header"
     "create display display"
     "create display display"
   `,
-
-
-  // "@media": {
-  //   "screen and (max-width: 800px)": {
-  //     gridTemplateColumns: "1fr",
-  //     gridTemplateRows: "100px 300px 1fr",
-  //     gridTemplateAreas: `
-  //       "header"
-  //       "create"
-  //       "display"
-  //     `,
-  //   },
-  // },
 });
 
 export const HeaderLayout = style({

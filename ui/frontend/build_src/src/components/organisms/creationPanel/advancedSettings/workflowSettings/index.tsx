@@ -1,5 +1,6 @@
 import React from "react";
 import { useImageCreate } from "../../../../../stores/imageCreateStore";
+import { useImageDisplay } from "../../../../../stores/imageDisplayStore";
 
 import { useCreateUI } from "../../creationPanelUIStore";
 
@@ -37,6 +38,11 @@ export default function WorkflowSettings() {
   const toggleWorkflowOpen = useCreateUI(
     (state) => state.toggleAdvWorkflowSettings
   );
+
+
+  const shouldDisplayWhenComplete = useImageDisplay((state) => state.shouldDisplayWhenComplete);
+  const toggleDisplayComplete = useImageDisplay((state) => state.toggleDisplayComplete);
+
 
   return (
     <div>
@@ -81,6 +87,16 @@ export default function WorkflowSettings() {
               }
             ></Checkbox>
           </div>
+
+          <div className={SettingItem}>
+            <Checkbox
+              isChecked={shouldDisplayWhenComplete}
+              label="Display Completed"
+              toggleCheck={toggleDisplayComplete}
+            ></Checkbox>
+          </div>
+
+
         </>
       )}
     </div>

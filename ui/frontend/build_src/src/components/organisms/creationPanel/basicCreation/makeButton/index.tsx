@@ -38,7 +38,12 @@ import AudioDing from "../../../../molecules/_stateless/audioDing";
 
 const idDelim = "_item";
 
-export default function MakeButton() {
+interface Props {
+  className?: string;
+}
+
+
+export default function MakeButton({ className }: Props) {
   const { t } = useTranslation();
 
   const dingRef = useRef<HTMLAudioElement>();
@@ -295,9 +300,7 @@ export default function MakeButton() {
   return (
     <>
       <button
-        className={buttonStyle({
-          size: "large",
-        })}
+        className={[className, buttonStyle()].join(" ")}
         onClick={() => {
           void makeImageQueue();
         }}
