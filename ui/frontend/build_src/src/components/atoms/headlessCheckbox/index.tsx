@@ -35,7 +35,7 @@ export default function Checkbox({ isChecked, label, isLabelFirst, toggleCheck, 
         data-disabled={disabled}
       >
         {/* TODO Make the lable first logic more eligant? */}
-        {(isLabelFirst === true) && <Switch.Label> {label} </Switch.Label>}
+        {(isLabelFirst == true) && <Switch.Label> {label} </Switch.Label>}
         <Switch className={CheckContent} checked={isChecked} onChange={handChange}>
           <div
             className={CheckInner}
