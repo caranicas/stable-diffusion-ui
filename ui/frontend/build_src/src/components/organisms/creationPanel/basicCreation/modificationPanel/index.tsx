@@ -7,6 +7,8 @@ import PromptTag from "../../../../molecules/promptTag";
 
 import ActiveTags from "../promptCreator/activeTags";
 
+
+import MatrixList from "./matrixList";
 import {
   IconFont,
 } from "../../../../../styles/shared.css";
@@ -18,6 +20,10 @@ import {
   inputRow,
   prmptBtn,
 } from "../promptCreator/promptCreator.css";
+
+import {
+  buttonStyle,
+} from "../../../../_recipes/button.css";
 
 interface TagTypeProps {
   positive: boolean;
@@ -75,7 +81,7 @@ export default function ModificationPanel() {
 
   return (
     <div>
-      <div className={inputRow}>
+      <div className=''>
         <span>
           <label> modifiers</label>
           {/* @ts-expect-error */}
@@ -83,19 +89,25 @@ export default function ModificationPanel() {
             setTagText(event.target.value);
           }}></input>
         </span>
-        <TagTypeToggle positive={positive} setPositive={setPositive}></TagTypeToggle>
+        {/* <TagTypeToggle positive={positive} setPositive={setPositive}></TagTypeToggle> */}
+
+        <button
+          className={[buttonStyle({
+            color: 'secondary',
+            size: 'large',
+          })].join(" ")}
+          onClick={enterPrompt}
+        >
+          Add Modification
+        </button>
       </div>
 
       <div>
-
-        <button
-          className={prmptBtn}
-          onClick={enterPrompt}
-        >
-          Add Modifier
-        </button>
+        <MatrixList></MatrixList>
       </div>
+
       <ActiveTags></ActiveTags>
+
     </div>
   );
 }

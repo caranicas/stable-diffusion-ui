@@ -3,6 +3,7 @@ import produce from "immer";
 import { persist } from "zustand/middleware";
 
 export interface ImageCreationUIOptions {
+  isModifyingPrompt: boolean;
   isOpenAdvancedSettings: boolean;
   isOpenAdvImprovementSettings: boolean;
   isOpenAdvPropertySettings: boolean;
@@ -10,6 +11,7 @@ export interface ImageCreationUIOptions {
   isOpenImageModifier: boolean;
   showQueue: boolean;
 
+  // setIsModifyingPrompt: (isModifyingPrompt: boolean) => void;
   toggleAdvancedSettings: () => void;
   setAdvancedSettingsisOpen: (isOpen: boolean) => void;
   toggleAdvImprovementSettings: () => void;
@@ -28,6 +30,7 @@ export const useCreateUI = create<ImageCreationUIOptions>(
   //@ts-expect-error
   persist(
     (set, get) => ({
+      isModifyingPrompt: false,
       isOpenAdvancedSettings: false,
       isOpenAdvImprovementSettings: false,
       isOpenAdvPropertySettings: false,

@@ -300,7 +300,9 @@ export default function MakeButton({ className }: Props) {
   return (
     <>
       <button
-        className={[className, buttonStyle()].join(" ")}
+        className={[className, buttonStyle({
+          size: 'large',
+        })].join(" ")}
         onClick={() => {
           void makeImageQueue();
         }}
