@@ -58,6 +58,7 @@ export default function WorkflowSettings() {
             <NumberInput
               label={t("settings.amount-of-img")}
               value={numOutputs}
+              min={1}
               onChange={(value) => setRequestOption("num_outputs", value)}
             ></NumberInput>
           </div>
@@ -65,6 +66,7 @@ export default function WorkflowSettings() {
           <div className={SettingItem}>
             <NumberInput
               label={t("settings.how-many")}
+              min={1}
               value={parallelCount}
               onChange={(value) => setParallelCount(value)}
             ></NumberInput>

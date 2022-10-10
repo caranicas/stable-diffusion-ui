@@ -6,7 +6,6 @@ import { ImageRequest } from "../api/api";
 
 import { promptTag } from "./store.d";
 
-
 export enum QueueStatus {
   pending = "pending",
   processing = "processing",
@@ -28,13 +27,10 @@ interface PromptMatixState {
   promptsList: QueuedPrompt[];
   setPotentialTags: (tags: string) => void;
   generateTags: (isPositive: boolean) => void;
-  pendingPrompts: () => QueuedPrompt[];
-  hasPendingQueue: () => boolean;
-  hasAnyQueue: () => boolean;
-  firstInQueue: () => QueuedPrompt;
-  updateStatus: (queueId: string, status: QueueStatus[keyof QueueStatus]) => void; removeItem: (queueId: string) => void;
-  removeCompleted: () => void;
-  clearQueue: () => void;
+  togglePromptType: (queueId: string, tagId: string) => void;
+  removePromptModifier: (queueId: string, tagId: string) => void;
+  getSafeList: () => QueuedPrompt[];
+  clearPromptMatrix: () => void;
 }
 
 export const usePromptMatrix = create<PromptMatixState>((set, get) => ({
@@ -63,67 +59,42 @@ export const usePromptMatrix = create<PromptMatixState>((set, get) => ({
     if (get().shouldClearOnAdd) {
       set({ potentialTags: '' });
     }
-
   },
 
-  pendingPrompts: () => {
-    return get().prompts.filter((item) => item.status === QueueStatus.pending);
+  togglePromptType: (queueId: string, tagId: string) => {
+    set(
+      produce((state) => {
+        const prompt = state.promptsList.find((prompt) => prompt.queueId === queueId);
+        const tag = prompt.options.find((tag) => tag.id === tagId);
+        tag.type = tag.type === 'positive' ? 'negative' : 'positive';
+      })
+    );
   },
 
-  hasPendingQueue: () => {
-    return get().pendingPrompts().length > 0;
+  removePromptModifier: (queueId: string, tagId: string) => {
+    set(
+      produce((state) => {
+        const prompt = state.promptsList.find((prompt) => prompt.queueId === queueId);
+        const tagIndex = prompt.options.findIndex((tag) => tag.id === tagId);
+        prompt.options.splice(tagIndex, 1);
+      })
+    );
   },
 
-  hasAnyQueue: () => {
-    return get().prompts.length > 0;
-  },
+  getSafeList: () => {
 
-  firstInQueue: () => {
-    const pending = get().pendingPrompts()[0];
-
-    if (pending === undefined) {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      const temp: QueuedPrompt = { queueId: "", options: ({} as ImageRequest), status: QueueStatus.pending };
-      return temp;
+    // return an sinlge item with an empty list if there are no prompts
+    if (get().promptsList.length === 0) {
+      return [{
+        queueId: uuidv4(),
+        options: []
+      }];
     }
-    return pending;
+
+    return get().promptsList;
   },
 
-  updateStatus: (queueId: string, status: QueueStatus[keyof QueueStatus]) => {
-    set(
-      produce((state) => {
-        const item = state.prompts.find((item: QueuedPrompt) => item.queueId === queueId);
-        if (void 0 !== item) {
-          item.status = status;
-        }
-      })
-    );
-  },
-
-  removeItem: (queueId: string) => {
-    set(
-      produce((state) => {
-        const index = state.prompts.findIndex((item: QueuedPrompt) => item.queueId === queueId);
-        if (index > -1) {
-          state.prompts.splice(index, 1);
-        }
-      })
-    );
-  },
-
-  removeCompleted: () => {
-    set(
-      produce((state) => {
-        const completed = state.prompts.filter((item: QueuedPrompt) => item.status === QueueStatus.complete);
-        completed.forEach((item: QueuedPrompt) => {
-          const index = state.prompts.indexOf(item);
-          state.prompts.splice(index, 1);
-        });
-      })
-    );
-  },
-
-  clearQueue: () => {
+  clearPromptMatrix: () => {
     set(
       produce((state) => {
         state.prompts = [];

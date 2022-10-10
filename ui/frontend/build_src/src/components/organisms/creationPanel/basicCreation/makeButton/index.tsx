@@ -4,9 +4,14 @@ import React, { useEffect, useRef } from "react";
 import { useImageCreate } from "../../../../../stores/imageCreateStore";
 
 import {
+  usePromptMatrix
+} from "../../../../../stores/promptMatrixStore";
+
+import {
   QueueStatus,
   useRequestQueue
 } from "../../../../../stores/requestQueueStore";
+
 import {
   FetchingStates,
   useImageFetching
@@ -53,8 +58,13 @@ export default function MakeButton({ className }: Props) {
   const builtRequest = useImageCreate((state) => state.builtRequest);
   const isRandomSeed = useImageCreate((state) => state.isRandomSeed());
   const setRequestOption = useImageCreate((state) => state.setRequestOptions);
-
   const isSoundEnabled = useImageCreate((state) => state.isSoundEnabled());
+
+  // request modify logic
+  const promptsList = usePromptMatrix((state) => state.getSafeList());
+
+  const shouldClearOnCreate = usePromptMatrix((state) => state.shouldClearOnCreate);
+  const clearPromptMatrix = usePromptMatrix((state) => state.clearPromptMatrix);
 
   // request queue logic
   const addtoQueue = useRequestQueue((state) => state.addtoQueue);
@@ -220,45 +230,63 @@ export default function MakeButton({ className }: Props) {
   }
 
   const queueImageRequest = (req: ImageRequest) => {
-    // the actual number of request we will make
-    const requests = [];
-    // the number of images we will make
-    let { num_outputs } = req;
-    if (parallelCount > num_outputs) {
-      requests.push(num_outputs);
-    } else {
-      // while we have at least 1 image to make
-      while (num_outputs >= 1) {
-        // subtract the parallel count from the number of images to make
-        num_outputs -= parallelCount;
 
-        // if we are still 0 or greater we can make the full parallel count
-        if (num_outputs <= 0) {
-          requests.push(parallelCount);
-        }
-        // otherwise we can only make the remaining images
-        else {
-          requests.push(Math.abs(num_outputs));
+    promptsList.forEach((prompt) => {
+
+      // marry the modifiers to the prompt
+      const { options } = prompt;
+      // TODO clean up some of the comma logic
+      const positivePrompt = options.filter((t) => t.type === "positive").map((t) => t.name).join(",");
+      const negativePrompt = options.filter((t) => t.type === "negative").map((t) => t.name).join(",");
+      const fullPrompt = `${req.prompt}, ${positivePrompt}`;
+      const fullNegativePrompt = `${req.negative_prompt}, ${negativePrompt}`;
+      req.prompt = fullPrompt;
+      req.negative_prompt = fullNegativePrompt;
+
+      // the actual number of request we will make
+      const requests = [];
+      // the number of images we will make
+      let { num_outputs } = req;
+      if (parallelCount > num_outputs) {
+        requests.push(num_outputs);
+      } else {
+        // while we have at least 1 image to make
+        while (num_outputs >= 1) {
+          // subtract the parallel count from the number of images to make
+          num_outputs -= parallelCount;
+
+          // if we are still 0 or greater we can make the full parallel count
+          if (num_outputs <= 0) {
+            requests.push(parallelCount);
+          }
+          // otherwise we can only make the remaining images
+          else {
+            requests.push(Math.abs(num_outputs));
+          }
         }
       }
-    }
 
-    requests.forEach((num, index) => {
-      // get the seed we want to use
-      let seed = req.seed;
-      if (index !== 0) {
-        // we want to use a random seed for subsequent requests
-        seed = useRandomSeed();
-      }
-      // add the request to the queue
-      addtoQueue(uuidv4(), {
-        ...req,
-        // updated the number of images to make
-        num_outputs: num,
-        // update the seed
-        seed,
+      requests.forEach((num, index) => {
+        // get the seed we want to use
+        let seed = req.seed;
+        if (index !== 0) {
+          // we want to use a random seed for subsequent requests
+          seed = useRandomSeed();
+        }
+        // add the request to the queue
+        addtoQueue(uuidv4(), {
+          ...req,
+          // updated the number of images to make
+          num_outputs: num,
+          // update the seed
+          seed,
+        });
       });
     });
+
+    if (shouldClearOnCreate) {
+      clearPromptMatrix();
+    }
   }
 
   const makeImageQueue = async () => {
