@@ -36,24 +36,14 @@ export default function ModifierTag({ name, category, previews }: ModifierTagPro
     setShowActions(false);
   };
 
-  const addCreateTag = useImageCreate((state) => state.addCreateTag);
+  const modifyPrompt = useImageCreate((state) => state.modifyPrompt);
+
   const setPositivePrompt = () => {
-    addCreateTag({ id: uuidv4(), name, type: 'positive' });
+    modifyPrompt(name, 'positive');
   }
   const setNegativePrompt = () => {
-    addCreateTag({ id: uuidv4(), name, type: 'negative' });
+    modifyPrompt(name, 'negative');
   }
-
-  // const hasTag = useImageCreate((state) => state.hasTag(category, name))
-  //   ? "selected"
-  //   : "";
-  // const toggleTag = useImageCreate((state) => state.toggleTag);
-
-  // const _toggleTag = () => {
-  //   toggleTag(category, name);
-  // };
-
-  // , hasTag].join(" ")
   return (
     <div className={ModifierTagMain}
       onMouseEnter={handleHover}

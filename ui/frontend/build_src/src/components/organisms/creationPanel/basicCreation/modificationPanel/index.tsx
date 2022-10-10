@@ -2,11 +2,11 @@ import React, { useState, KeyboardEventHandler, Fragment } from "react";
 import { Switch } from '@headlessui/react'
 
 import { useImageCreate } from "../../../../../stores/imageCreateStore";
+import { usePromptMatrix } from "../../../../../stores/promptMatrixStore";
 import { v4 as uuidv4 } from "uuid";
 import PromptTag from "../../../../molecules/promptTag";
 
 import ActiveTags from "../promptCreator/activeTags";
-
 
 import MatrixList from "./matrixList";
 import {
@@ -24,6 +24,7 @@ import {
 import {
   buttonStyle,
 } from "../../../../_recipes/button.css";
+// import Checkbox from "src/components/atoms/headlessCheckbox";
 
 interface TagTypeProps {
   positive: boolean;
@@ -51,31 +52,22 @@ function TagTypeToggle({ positive, setPositive }: TagTypeProps) {
 
 export default function ModificationPanel() {
 
-  // const createTags = useImageCreate((state) => state.createTags);
-  const [tagText, setTagText] = useState('');
   const [positive, setPositive] = useState(true)
-  const addCreateTag = useImageCreate((state) => state.addCreateTag);
+
+  const potentialTags = usePromptMatrix((state) => state.potentialTags);
+  const setPotentialTags = usePromptMatrix((state) => state.setPotentialTags);
+  const generateTags = usePromptMatrix((state) => state.generateTags);
 
   const enterPrompt = () => {
-    if (tagText !== '') {
-      const type = positive ? "positive" : "negative";
-      tagText.split(',').map((tag) => tag.trim()).forEach((tag) => {
-        addCreateTag({ id: uuidv4(), name: tag, type });
-      });
-      setTagText('');
+    if (potentialTags !== '') {
+      generateTags(positive);
     }
   }
 
   const checkForEnter = (event: KeyboardEventHandler<HTMLInputElement>) => {
     // @ts-expect-error
-    if (event.key === "Enter") {
-      if (tagText !== '') {
-        const type = positive ? "positive" : "negative";
-        tagText.split(',').map((tag) => tag.trim()).forEach((tag) => {
-          addCreateTag({ id: uuidv4(), name: tag, type });
-        });
-        setTagText('');
-      }
+    if (event.key === 'Enter') {
+      enterPrompt();
     }
   };
 
@@ -85,11 +77,11 @@ export default function ModificationPanel() {
         <span>
           <label> modifiers</label>
           {/* @ts-expect-error */}
-          <input value={tagText} onKeyDown={checkForEnter} onChange={(event) => {
-            setTagText(event.target.value);
+          <input value={potentialTags} onKeyDown={checkForEnter} onChange={(event) => {
+            setPotentialTags(event.target.value);
           }}></input>
         </span>
-        {/* <TagTypeToggle positive={positive} setPositive={setPositive}></TagTypeToggle> */}
+        <TagTypeToggle positive={positive} setPositive={setPositive}></TagTypeToggle>
 
         <button
           className={[buttonStyle({
@@ -102,11 +94,9 @@ export default function ModificationPanel() {
         </button>
       </div>
 
-      <div>
-        <MatrixList></MatrixList>
-      </div>
-
-      <ActiveTags></ActiveTags>
+      <MatrixList></MatrixList>
+      {/* 
+      <ActiveTags></ActiveTags> */}
 
     </div>
   );

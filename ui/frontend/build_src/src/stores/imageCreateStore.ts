@@ -7,6 +7,9 @@ import { useRandomSeed } from "../utils";
 
 import { ImageRequest } from "../api/api.d";
 
+import { promptTag } from "./store.d";
+
+
 export interface ImageCreationUiOptions {
   isUseRandomSeed: boolean;
   isUseAutoSave: boolean;
@@ -42,17 +45,10 @@ interface ModifiersList {
 
 type ModifiersOptionList = ModifiersList[];
 
-export interface promptTag {
-  id: string;
-  name: string;
-  type: 'positive' | 'negative';
+
+interface creationObject {
+  req: ImageRequest;
 }
-
-// interface creationObject {
-//   req: ImageRequest;
-//   createTags: [];
-// }
-
 
 interface ImageCreateState {
   parallelCount: number;
@@ -75,6 +71,7 @@ interface ImageCreateState {
   toggleTag: (category: string, tag: string) => void;
   hasTag: (category: string, tag: string) => boolean;
   selectedTags: () => ModifierObject[];
+  modifyPrompt: (prompt: string, type: string) => void;
   addCreateTag: (tag: promptTag) => void;
   removeCreateTag: (id: string) => void;
   changeCreateTagType: (id: string, type: 'positive' | 'negative') => void;
@@ -224,6 +221,47 @@ export const useImageCreate = create<ImageCreateState>(
         }
       }
       return selected;
+    },
+
+    modifyPrompt: (prompt: string, type: string) => {
+      // if the type is positive
+      if (type === 'positive') {
+        // get the current prompt from the request
+        const currentPrompt = get().requestOptions.prompt;
+        // if the prompt doesnt have a comma at the end add one
+        if (!currentPrompt.endsWith(',')) {
+          prompt = currentPrompt + ', ' + prompt + ',';
+        }
+        else {
+          prompt = currentPrompt + prompt + ', ';
+        }
+
+        // set the prompt
+        set(
+          produce((state) => {
+            state.requestOptions.prompt = prompt;
+          }
+          )
+        );
+      }
+      else {
+        // get the current negative prompt from the request
+        const currentNegativePrompt = get().requestOptions.negative_prompt;
+        if (!currentNegativePrompt.endsWith(',')) {
+          prompt = currentNegativePrompt + ', ' + prompt + ',';
+        }
+        else {
+          prompt = currentNegativePrompt + prompt + ', ';
+        }
+
+        // set the prompt
+        set(
+          produce((state) => {
+            state.requestOptions.negative_prompt = prompt;
+          }
+          )
+        );
+      }
     },
 
     addCreateTag: (tag: promptTag) => {
