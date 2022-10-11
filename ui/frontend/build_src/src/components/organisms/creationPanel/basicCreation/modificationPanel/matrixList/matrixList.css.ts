@@ -16,7 +16,6 @@ export const matrixListMain = style([card(
   }
 }]);
 
-
 export const matrixListItem = style([card(
   {
     level: 1,

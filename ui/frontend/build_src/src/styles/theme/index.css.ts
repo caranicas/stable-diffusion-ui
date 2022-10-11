@@ -4,6 +4,39 @@ import {
   createTheme,
 } from "@vanilla-extract/css";
 
+import { createVar, style } from '@vanilla-extract/css';
+
+
+export const backgroundHueVar = createVar();
+export const backgroundSaturationVar = createVar();
+export const backgroundLightnessVar = createVar();
+
+export const backgroundMainColor = style({
+  vars: {
+    [backgroundHueVar]: '210',
+    [backgroundSaturationVar]: '6%',
+    [backgroundLightnessVar]: '13%',
+  }
+});
+
+export const backgroundMainColorLight = style({
+  vars: {
+    [backgroundHueVar]: '210',
+    [backgroundSaturationVar]: '4%',
+    [backgroundLightnessVar]: '18%',
+  }
+});
+
+export const backgroundMainColorDark = style({
+  vars: {
+    [backgroundHueVar]: '210',
+    [backgroundSaturationVar]: '3%',
+    [backgroundLightnessVar]: '7%',
+  }
+});
+
+
+
 const app = createGlobalTheme(":root", {
   spacing: {
     none: "0",
@@ -111,5 +144,7 @@ const app = createGlobalTheme(":root", {
     link: "#0066cc", // blue
   }
 });
+
+export const backgroundColorVar = createVar();
 
 export const vars = { ...app };
