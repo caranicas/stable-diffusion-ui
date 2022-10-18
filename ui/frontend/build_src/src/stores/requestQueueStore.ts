@@ -1,7 +1,7 @@
 import create from "zustand";
 import produce from "immer";
 
-import { ImageRequest } from "../api/api.d";
+import { ImageRequest } from "@api/api.d";
 
 export enum QueueStatus {
   pending = "pending",

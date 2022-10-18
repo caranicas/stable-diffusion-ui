@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { useImageCreate } from "../../../stores/imageCreateStore";
-import { usePromptMatrix } from "../../../stores/promptMatrixStore";
+import { useImageCreate } from "@stores/imageCreateStore";
+import { usePromptMatrix } from "@stores/promptMatrixStore";
 
 import {
   IconFont,
-} from "../../../styles/shared.css";
+} from "@styles/shared.css";
 
 
 import {

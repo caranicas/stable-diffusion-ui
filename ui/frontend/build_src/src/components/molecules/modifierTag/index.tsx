@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from "uuid";
 import {
   ModifierPreview,
   useImageCreate
-} from "../../../stores/imageCreateStore";
+} from "@stores/imageCreateStore";
 
 import {
   IconFont,
-} from "../../../styles/shared.css";
+} from "@styles/shared.css";
 
 import {
   ModifierTagMain,

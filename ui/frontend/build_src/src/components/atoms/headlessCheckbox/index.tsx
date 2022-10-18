@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import { Switch } from '@headlessui/react'
 
-import { useImageDisplay } from "../../../stores/imageDisplayStore";
+// import { useImageDisplay } from "@stores/imageDisplayStore";
 
 import {
   IconFont,
-} from "../../../styles/shared.css";
+} from "@styles/shared.css";
 
 import {
   CheckMain,

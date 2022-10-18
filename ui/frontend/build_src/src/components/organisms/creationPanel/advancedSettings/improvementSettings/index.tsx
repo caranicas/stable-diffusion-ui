@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useImageCreate } from "../../../../../stores/imageCreateStore";
+import { useImageCreate } from "@stores/imageCreateStore";
 import { useCreateUI } from "../../creationPanelUIStore";
 
-import HeadlessDisclosure from "../../../../atoms/headlessDisclosure";
-import Checkbox from "../../../../atoms/headlessCheckbox";
+import HeadlessDisclosure from "@atoms/headlessDisclosure";
+import Checkbox from "@atoms/headlessCheckbox";
 import UpscaleOptions from "./upscaleOptions";
 
 import {
   SettingItem,
-} from "../../../../../styles/shared.css";
+} from "@styles/shared.css";
 
 export default function ImprovementSettings() {
   const { t } = useTranslation();

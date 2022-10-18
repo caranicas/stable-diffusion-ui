@@ -5,7 +5,7 @@ import { devtools } from "zustand/middleware";
 
 import { useRandomSeed } from "../utils";
 
-import { ImageRequest } from "../api/api.d";
+import { ImageRequest } from "@api/api.d";
 
 import { promptTag } from "./store.d";
 
