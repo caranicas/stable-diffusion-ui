@@ -15,7 +15,6 @@ import {
   InpaintingSlider,
 } from "./creationPanel.css";
 
-
 export default function CreationPanel() {
   const isInPaintingMode = useImageCreate((state) => state.isInpainting);
 

@@ -297,6 +297,8 @@ export default function MakeButton({ className }: Props) {
     }
     // the request that we have built
     const req = builtRequest();
+    console.log('req', req);
+    debugger;
     queueImageRequest(req);
   };
 

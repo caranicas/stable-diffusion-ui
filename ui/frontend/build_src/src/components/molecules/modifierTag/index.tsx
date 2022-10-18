@@ -44,6 +44,17 @@ export default function ModifierTag({ name, category, previews }: ModifierTagPro
   const setNegativePrompt = () => {
     modifyPrompt(name, 'negative');
   }
+
+  // const hasTag = useImageCreate((state) => state.hasTag(category, name))
+  //   ? "selected"
+  //   : "";
+  // const toggleTag = useImageCreate((state) => state.toggleTag);
+
+  // const _toggleTag = () => {
+  //   toggleTag(category, name);
+  // };
+
+  // , hasTag].join(" ")
   return (
     <div className={ModifierTagMain}
       onMouseEnter={handleHover}
